@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
           spacing: 5,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(uiIcons[0]['location'], color: NovaColors.textGray),
+            Icon(uiIcons[0]['location'], color: NovaColors.textGray, size: 20,),
             Text(
               AppText.appTitle,
               style: TextStyle(
