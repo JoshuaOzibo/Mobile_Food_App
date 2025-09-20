@@ -4,9 +4,17 @@ import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+bool isTextSelected = true;
+String selectedText = 'Pasta';
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,17 +105,25 @@ class HomePage extends StatelessWidget {
             ),
           ),
 
+          SizedBox(height: 40,),
+
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: SizedBox(
-              height: 50,
+              height: 40,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                // clipBehavior: Clip.hardEdge,
-                physics: NeverScrollableScrollPhysics(),
                 children: [
                   ...filterText.map(
-                    (item) => FilterButton(text: item, isSelected: true),
+                    (item) => FilterButton(
+                      text: item,
+                      isSelected: selectedText == item
+                          ? isTextSelected
+                          : !isTextSelected,
+                      onTapFilter: () => setState(() {
+                        selectedText = item;
+                      }),
+                    ),
                   ),
                 ],
               ),
