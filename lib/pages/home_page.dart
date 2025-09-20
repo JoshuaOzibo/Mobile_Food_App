@@ -8,7 +8,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeIcons = uiIcons.map((item) => item).toList();
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       appBar: AppBar(
@@ -26,7 +25,7 @@ class HomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(
-                homeIcons[0]['menu'],
+                uiIcons['menu'],
                 size: 28,
                 color: NovaColors.textGray,
               ),
@@ -38,7 +37,7 @@ class HomePage extends StatelessWidget {
           spacing: 5,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(uiIcons[0]['location'], color: NovaColors.textGray, size: 20,),
+            Icon(uiIcons['location'], color: NovaColors.textGray, size: 20),
             Text(
               AppText.appTitle,
               style: TextStyle(
@@ -48,11 +47,11 @@ class HomePage extends StatelessWidget {
               ),
             ),
 
-            Icon(uiIcons[0]['arrow_down'], color: NovaColors.textGray),
+            Icon(uiIcons['arrow_down'], color: NovaColors.textGray),
           ],
         ),
 
-        actions: [Icon(homeIcons[0]['avater'], size: 50,)],
+        actions: [Icon(uiIcons['avater'], size: 50)],
       ),
       body: Placeholder(),
     );
