@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       appBar: AppBar(
-        actionsPadding: EdgeInsetsDirectional.symmetric(horizontal: 10),
+        actionsPadding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
         toolbarHeight: 80,
         leading: Align(
           alignment: Alignment.center,
@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(uiIcons['location'], color: NovaColors.textGray, size: 20),
-            Text(
+           const Text(
               AppText.appTitle,
               style: TextStyle(
                 color: NovaColors.textGray,
@@ -53,7 +53,56 @@ class HomePage extends StatelessWidget {
 
         actions: [Icon(uiIcons['avater'], size: 50)],
       ),
-      body: Placeholder(),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 10,),
+         Padding(
+           padding: const EdgeInsets.symmetric(horizontal: 10),
+           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+            AppText.bodyTitle, 
+            style: TextStyle(
+              fontSize: 35, 
+              fontWeight: FontWeight.bold
+              ),),
+           const Text(
+            AppText.bodySubTitle, 
+            style: TextStyle(
+              fontSize: 34, 
+              fontWeight: FontWeight.bold
+              ),),
+            ],
+           ),
+         ),
+         SizedBox(height: 20,),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SizedBox(
+              height: 50,
+              child: TextField(
+                autocorrect: true,
+                autofillHints: Characters(''),
+                decoration: InputDecoration(
+                  hint: const Text(
+                    'search for your food',
+                    style: TextStyle(color: NovaColors.textGray, fontSize: 16),
+                  ),
+                  suffixIcon: Icon(uiIcons['search']),
+                  suffixIconColor: NovaColors.textGray,
+                  fillColor: NovaColors.searchBar,
+                  filled: true,
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none
+                  )
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
