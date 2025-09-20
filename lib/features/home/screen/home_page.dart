@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+int currentBottomIndex = 0;
 bool isTextSelected = true;
 String selectedText = 'Pasta';
 
@@ -65,7 +66,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10),
+         const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: SizedBox(
@@ -105,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          SizedBox(height: 40,),
+          const SizedBox(height: 30,),
 
           Padding(
             padding: const EdgeInsets.only(left: 10),
@@ -131,6 +132,22 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        // elevation: 0,
+        currentIndex: currentBottomIndex,
+        onTap: ((item) => setState(() {
+          currentBottomIndex = item;
+        })),
+        selectedItemColor: NovaColors.primaryOrange,
+        unselectedItemColor: NovaColors.textSecondary,
+
+        items: [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: '.'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: '.'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: '.'),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: '.'),
+      ])
     );
   }
 }
