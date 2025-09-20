@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
 
-        actions: [Icon(homeIcons[0]['avater'])],
+        actions: [Icon(homeIcons[0]['avater'], size: 50,)],
       ),
       body: Placeholder(),
     );
