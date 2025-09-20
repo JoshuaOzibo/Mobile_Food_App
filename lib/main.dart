@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_food_app/pages/home_page.dart';
+import 'package:mobile_food_app/features/home/screen/home_page.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 
 void main() {
