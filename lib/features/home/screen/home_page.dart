@@ -3,6 +3,7 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
+import 'package:mobile_food_app/features/home/components/product_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -66,7 +67,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         const SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -106,7 +107,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          const SizedBox(height: 30,),
+          const SizedBox(height: 30),
 
           Padding(
             padding: const EdgeInsets.only(left: 10),
@@ -130,6 +131,35 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+
+          SizedBox(height: 40),
+
+          SizedBox(
+            height: 390,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.74,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 20,
+                ),
+
+                children: [
+                  ...productList.map(
+                    (item) => ProductCard(
+                      image: item['image'],
+                      title: item['title'],
+                      subTitle: item['subTitle'],
+                      price: item['price'],
+                      handleProductTap: () => print(item),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
 
@@ -142,11 +172,21 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: NovaColors.textSecondary,
 
         items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home, size: 20,), label: '.'),
-        BottomNavigationBarItem(icon: Icon(uiIcons['shopping_bag'], size: 20,), label: '.'),
-        BottomNavigationBarItem(icon: Icon(uiIcons['favorite'], size: 20,), label: '.'),
-        BottomNavigationBarItem(icon: Icon(uiIcons['notification'], size: 20,), label: '.'),
-      ])
+          BottomNavigationBarItem(icon: Icon(Icons.home, size: 20), label: '.'),
+          BottomNavigationBarItem(
+            icon: Icon(uiIcons['shopping_bag'], size: 20),
+            label: '.',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(uiIcons['favorite'], size: 20),
+            label: '.',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(uiIcons['notification'], size: 20),
+            label: '.',
+          ),
+        ],
+      ),
     );
   }
 }

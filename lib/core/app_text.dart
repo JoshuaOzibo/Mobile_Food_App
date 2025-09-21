@@ -6,31 +6,37 @@ class AppText {
   static const bodySubTitle = 'Eats on the Go';
 }
 
- List<String> filterText = ["Pasta", "Ramen", "Biryanis", "Tandoori", "Smoothie"];
+const List<String> filterText = [
+  "Pasta",
+  "Ramen",
+  "Biryanis",
+  "Tandoori",
+  "Smoothie",
+];
 
- List<Map<String, dynamic>> productList = [
+const List<Map<String, dynamic>> productList = [
   {
-    "image": '',
+    "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Spaghetti",
     "subTitle": "With Chips & Cucumber",
     "price": "\$6.22",
   },
   {
-    "image": '',
-    "title": "Spaghetti",
+    "image": 'assets/images/squirrel-619968_1280.jpg',
+    "title": "Libguine",
     "subTitle": "With Chips & Cucumber",
-    "price": "\$6.22",
+    "price": "\$7.22",
   },
   {
-    "image": '',
+    "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Spaghetti",
     "subTitle": "With Chips & Cucumber",
-    "price": "\$6.22",
+    "price": "\$8.22",
   },
   {
-    "image": '',
-    "title": "Spaghetti",
+    "image": 'assets/images/squirrel-619968_1280.jpg',
+    "title": "Libguine",
     "subTitle": "With Chips & Cucumber",
-    "price": "\$6.22",
+    "price": "\$9.22",
   },
- ];
+];
