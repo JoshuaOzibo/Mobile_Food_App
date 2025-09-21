@@ -4,6 +4,8 @@ import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
+import 'package:mobile_food_app/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +21,7 @@ String selectedText = 'Pasta';
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    print(Provider.of<CartProvider>(context, listen: true).cart.length);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       appBar: AppBar(
@@ -153,7 +156,9 @@ class _HomePageState extends State<HomePage> {
                       title: item['title'],
                       subTitle: item['subTitle'],
                       price: item['price'],
-                      handleProductTap: () => print(item),
+                      handleProductTap: () {
+                        Provider.of<CartProvider>(context, listen: false).addProduct(item);
+                      },
                     ),
                   ),
                 ],
