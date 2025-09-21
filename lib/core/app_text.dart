@@ -7,3 +7,30 @@ class AppText {
 }
 
  List<String> filterText = ["Pasta", "Ramen", "Biryanis", "Tandoori", "Smoothie"];
+
+ List<Map<String, dynamic>> productList = [
+  {
+    "image": '',
+    "title": "Spaghetti",
+    "subTitle": "With Chips & Cucumber",
+    "price": "\$6.22",
+  },
+  {
+    "image": '',
+    "title": "Spaghetti",
+    "subTitle": "With Chips & Cucumber",
+    "price": "\$6.22",
+  },
+  {
+    "image": '',
+    "title": "Spaghetti",
+    "subTitle": "With Chips & Cucumber",
+    "price": "\$6.22",
+  },
+  {
+    "image": '',
+    "title": "Spaghetti",
+    "subTitle": "With Chips & Cucumber",
+    "price": "\$6.22",
+  },
+ ];

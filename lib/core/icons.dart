@@ -7,7 +7,7 @@ final Map<String, dynamic> uiIcons = {
   "avater": Icons.account_circle,
   "search": Icons.search,
   "star" : Icons.star,
-  "add" : Icons.add_circle,
+  "add" : Icons.add,
   "arrow_back" : Icons.arrow_back_ios_new,
   "favorite" : Icons.favorite,
   "favorite_border" : Icons.favorite_border,
