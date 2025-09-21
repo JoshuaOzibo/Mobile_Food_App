@@ -9,14 +9,14 @@ class ProductCard extends StatelessWidget {
     required this.title,
     required this.subTitle,
     required this.price,
-    required this. handleProductTap,
+    required this.handleProductTap,
   });
 
   final String image;
   final String title;
   final String subTitle;
   final String price;
-  final GestureTapCallback  handleProductTap;
+  final GestureTapCallback handleProductTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +38,36 @@ class ProductCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               color: NovaColors.textSecondary,
             ),
-            child: Image.asset(
-              height: double.infinity,
-              image
-              ),
+            child: Stack(
+              children: [
+                Image.asset(height: double.infinity, image),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: NovaColors.chipsRed,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                      )
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(uiIcons['star']),
+                        Text('2.5'),
+                      ],
+                    ),
+                  )
+                )
+              ],
+            ),
           ),
 
-         const Spacer(),
+          const Spacer(),
 
           Text(title),
-         const SizedBox(height: 5),
+          const SizedBox(height: 5),
           Text(subTitle),
 
           const SizedBox(height: 10),
@@ -64,9 +84,8 @@ class ProductCard extends StatelessWidget {
                 ),
                 child: GestureDetector(
                   onTap: handleProductTap,
-                  child: Icon(
-                    uiIcons['add'], 
-                    size: 20)),
+                  child: Icon(uiIcons['add'], size: 20),
+                ),
               ),
             ],
           ),

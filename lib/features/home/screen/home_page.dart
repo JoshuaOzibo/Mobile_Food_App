@@ -132,14 +132,14 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
 
           SizedBox(
             height: 390,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 0.74,
                   crossAxisSpacing: 15,
@@ -174,15 +174,60 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home, size: 20), label: '.'),
           BottomNavigationBarItem(
-            icon: Icon(uiIcons['shopping_bag'], size: 20),
+            icon: Stack(
+              children: [
+                Icon(uiIcons['shopping_bag'], size: 20),
+                Positioned(
+                  left: 10,
+                  child: Container(
+                    height: 9,
+                    width: 9,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 229, 15, 0),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             label: '.',
           ),
           BottomNavigationBarItem(
-            icon: Icon(uiIcons['favorite'], size: 20),
+            icon: Stack(
+              children: [
+                Icon(uiIcons['favorite'], size: 20),
+                Positioned(
+                  left: 10,
+                  child: Container(
+                    height: 9,
+                    width: 9,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 229, 15, 0),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             label: '.',
           ),
           BottomNavigationBarItem(
-            icon: Icon(uiIcons['notification'], size: 20),
+            icon: Stack(
+              children: [
+                Icon(uiIcons['notification'], size: 20),
+                Positioned(
+                  left: 10,
+                  child: Container(
+                    height: 9,
+                    width: 9,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 229, 15, 0),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             label: '.',
           ),
         ],

@@ -20,23 +20,27 @@ const List<Map<String, dynamic>> productList = [
     "title": "Spaghetti",
     "subTitle": "With Chips & Cucumber",
     "price": "\$6.22",
+    "rating": 2.5,
   },
   {
     "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Libguine",
     "subTitle": "With Chips & Cucumber",
     "price": "\$7.22",
+    "rating": 2.5,
   },
   {
     "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Spaghetti",
     "subTitle": "With Chips & Cucumber",
     "price": "\$8.22",
+    "rating": 2.5,
   },
   {
     "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Libguine",
     "subTitle": "With Chips & Cucumber",
     "price": "\$9.22",
+    "rating": 2.5,
   },
 ];
