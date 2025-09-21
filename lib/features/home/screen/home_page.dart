@@ -134,7 +134,6 @@ class _HomePageState extends State<HomePage> {
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        // elevation: 0,
         currentIndex: currentBottomIndex,
         onTap: ((item) => setState(() {
           currentBottomIndex = item;
@@ -143,10 +142,10 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: NovaColors.textSecondary,
 
         items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: '.'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: '.'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: '.'),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: '.'),
+        BottomNavigationBarItem(icon: Icon(Icons.home, size: 20,), label: '.'),
+        BottomNavigationBarItem(icon: Icon(uiIcons['shopping_bag'], size: 20,), label: '.'),
+        BottomNavigationBarItem(icon: Icon(uiIcons['favorite'], size: 20,), label: '.'),
+        BottomNavigationBarItem(icon: Icon(uiIcons['notification'], size: 20,), label: '.'),
       ])
     );
   }
