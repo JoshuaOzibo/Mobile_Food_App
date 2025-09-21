@@ -40,22 +40,27 @@ class ProductCard extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                Image.asset(height: double.infinity, image),
+                Image.asset(
+                  image,
+                  height: double.infinity, 
+                  fit: BoxFit.cover,
+                  ),
                 Positioned(
                   top: 0,
                   right: 0,
                   child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: NovaColors.chipsRed,
+                      color: const Color.fromARGB(255, 65, 28, 0),
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
+                        bottomLeft: Radius.circular(15),
                       )
                     ),
                     child: Row(
+                      spacing: 2,
                       children: [
-                        Icon(uiIcons['star']),
-                        Text('2.5'),
+                        Icon(uiIcons['star'], size: 13, color: NovaColors.primaryOrange,),
+                        Text('2.5', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
                       ],
                     ),
                   )
@@ -68,7 +73,7 @@ class ProductCard extends StatelessWidget {
 
           Text(title),
           const SizedBox(height: 5),
-          Text(subTitle),
+          Text(subTitle, style: TextStyle(color: NovaColors.textGray),),
 
           const SizedBox(height: 10),
 
@@ -80,7 +85,7 @@ class ProductCard extends StatelessWidget {
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  color: NovaColors.chipsRed,
+                  color: NovaColors.primaryOrange,
                 ),
                 child: GestureDetector(
                   onTap: handleProductTap,
