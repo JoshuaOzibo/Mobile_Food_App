@@ -8,6 +8,7 @@ final Map<String, dynamic> uiIcons = {
   "search": Icons.search,
   "star" : Icons.star,
   "add" : Icons.add,
+  "remove" : Icons.remove,
   "arrow_back" : Icons.arrow_back_ios_new,
   "favorite" : Icons.favorite,
   "favorite_border" : Icons.favorite_border,
