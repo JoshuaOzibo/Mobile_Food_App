@@ -37,8 +37,8 @@ class CartScreen extends StatelessWidget {
         child: Column(
           children: [
             // Map with this card
-           const CartCard(),
-           const Spacer(),
+            const CartCard(),
+            const Spacer(),
             const Column(
               spacing: 5,
               children: [
@@ -82,8 +82,8 @@ class CartScreen extends StatelessWidget {
                 ),
               ],
             ),
-           const SizedBox(height: 18),
-           const Row(
+            const SizedBox(height: 18),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -96,8 +96,8 @@ class CartScreen extends StatelessWidget {
                 ),
               ],
             ),
-           const SizedBox(height: 30),
-           SizedBox(
+            const SizedBox(height: 30),
+            SizedBox(
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
