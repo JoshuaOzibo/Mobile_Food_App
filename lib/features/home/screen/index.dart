@@ -21,7 +21,7 @@ class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
+      backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
         actionsPadding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
         toolbarHeight: 80,
@@ -39,7 +39,7 @@ class _IndexState extends State<Index> {
               child: Icon(
                 uiIcons['menu'],
                 size: 28,
-                color: NovaColors.textGray,
+                color: NovaColors.searchBarIcon,
               ),
             ),
           ),

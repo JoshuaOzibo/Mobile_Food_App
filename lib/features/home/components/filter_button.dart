@@ -20,11 +20,13 @@ class FilterButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(
-            width: 3,
-            style: BorderStyle.solid,
-            color: isSelected ? NovaColors.primaryOrange : Colors.black,
-          ),
+          bottom: isSelected
+              ? BorderSide(
+                  width: 3,
+                  style: BorderStyle.solid,
+                  color: NovaColors.lightOrange,
+                )
+              : BorderSide.none,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -34,8 +36,8 @@ class FilterButton extends StatelessWidget {
           text,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: isSelected ? NovaColors.primaryOrange : NovaColors.textGray,
-            ),
+            color: isSelected ? NovaColors.lightOrange : NovaColors.textGray,
+          ),
         ),
       ),
     );

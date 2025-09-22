@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: NovaColors.cardDark,
+        color: NovaColors.cardColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,30 +38,33 @@ class ProductCard extends StatelessWidget {
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: NovaColors.textSecondary,
             ),
             child: Stack(
               children: [
-                Image.asset(
-                  image,
-                  height: double.infinity, 
-                  fit: BoxFit.cover,
-                  ),
+                ClipRRect(
+                  borderRadius: BorderRadiusGeometry.circular(10),
+                  child: Image.asset(
+                    image,
+                    height: double.infinity, 
+                    fit: BoxFit.cover,
+                    ),
+                ),
                 Positioned(
                   top: 0,
                   right: 0,
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 65, 28, 0),
+                      color: NovaColors.badgeColor,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
+                        topRight: Radius.circular(8)
                       )
                     ),
                     child: Row(
                       spacing: 2,
                       children: [
-                        Icon(uiIcons['star'], size: 13, color: NovaColors.primaryOrange,),
+                        Icon(uiIcons['star'], size: 13, color: NovaColors.lightOrange,),
                         Text(rating.toString(), style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
                       ],
                     ),

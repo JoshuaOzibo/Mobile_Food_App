@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class NovaColors {
   // Background
-  static const Color backgroundDark = Color(0xFF0D0D0D);
+  static const Color backgroundDark = Color(0xFF0C1015);
   static const Color cardDark = Color(0xFF1C1C1E);
 
   // Primary Accent
-  static const Color primaryOrange = Color(0xFFE87722);
+  static const Color primaryOrange = Color(0xFFB44C1D);
+  static const Color lightOrange = Color.fromARGB(255, 255, 116, 52);
 
   // Text
   static const Color textWhite = Color(0xFFFFFFFF);
@@ -15,7 +16,13 @@ class NovaColors {
 
   // Icons & Ratings
   static const Color starYellow = Color(0xFFFFC107);
-  static const Color searchBar = Color(0xFF2A2A2C);
+  static const Color searchBar = Color(
+    0xFF141921,
+  ); //#141921 searchbar iconcolo: #9B9FA4
+  static const Color searchBarIcon = Color(0xFF9B9FA4);
+
+  static const Color cardColor = Color(0xFF191A21);
+  static const Color badgeColor = Color(0xFF3A2827);
 
   // Price
   static const Color priceWhite = Color(0xFFFFFFFF);

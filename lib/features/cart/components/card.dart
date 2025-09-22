@@ -79,7 +79,7 @@ class CartCard extends StatelessWidget {
                             vertical: 6,
                           ),
                           decoration: BoxDecoration(
-                            color: NovaColors.searchBar,
+                            color: NovaColors.primaryOrange,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(

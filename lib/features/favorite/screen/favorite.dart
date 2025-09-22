@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/components/favorite_card.dart';
 import 'package:mobile_food_app/core/icons.dart';
+import 'package:mobile_food_app/core/nova_colors.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key, required this.onNavigateHome});
 
- final VoidCallback onNavigateHome;
+  final VoidCallback onNavigateHome;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
+      backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
         leadingWidth: 30,
         leading: GestureDetector(

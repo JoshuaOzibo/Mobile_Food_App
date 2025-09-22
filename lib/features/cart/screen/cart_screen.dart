@@ -14,7 +14,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartItems = Provider.of<CartProvider>(context, listen: true);
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
+      backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
         leadingWidth: 25,
         leading: Container(
@@ -78,8 +78,7 @@ class CartScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 children: [
                   if (cartItems.cart.isEmpty)
-                    Center(
-                      child: Text('No item added to cart')),
+                    Center(child: Text('No item added to cart')),
                   ...cartItems.cart.map(
                     (item) => CartCard(
                       image: item['image'],
@@ -93,7 +92,7 @@ class CartScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-             Column(
+            Column(
               spacing: 5,
               children: [
                 Row(
@@ -137,7 +136,7 @@ class CartScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 18),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -156,7 +155,7 @@ class CartScreen extends StatelessWidget {
               height: 60,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 209, 64, 1),
+                  backgroundColor: NovaColors.primaryOrange,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
