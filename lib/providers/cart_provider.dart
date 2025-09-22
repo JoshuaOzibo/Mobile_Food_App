@@ -3,16 +3,10 @@ import 'package:flutter/material.dart';
 class CartProvider extends ChangeNotifier {
   final List<Map<String, dynamic>> cart = [];
   final List<Map<String, dynamic>> favoriteList = [];
-  final double totalPrice = 0;
-  double formattedPrice = 0;
+  final double deliveryFee = 1.50;
 
   void addProduct(Map<String, dynamic> product) {
     cart.add(product);
-    var total = cart.fold(
-      totalPrice,
-      (previousValue, element) => previousValue + element['price'],
-    );
-    formattedPrice = double.parse(total.toStringAsFixed(2));
     notifyListeners();
   }
 
@@ -20,15 +14,21 @@ class CartProvider extends ChangeNotifier {
     cart.remove(product);
     notifyListeners();
   }
+
+  double get subTotal {
+    final subtotalPrice = cart.fold(
+      0.0,
+      (prev, element) => prev + element['price'],
+    );
+    return double.parse(subtotalPrice.toStringAsFixed(2));
+  }
+
+  double get total {
+    if(cart.isEmpty) return 0.0;
+    final total = subTotal + deliveryFee;
+    return double.parse(total.toStringAsFixed(2));
+  }
 }
-
-class ExtendedValue extends CartProvider {
-
-}
-
-
-
-
 
 // class FavoriteItem extends CartProvider {
 //   void addFavorite(product) {

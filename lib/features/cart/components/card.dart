@@ -22,6 +22,7 @@ class CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final removeProvider = Provider.of<CartProvider>(context, listen: false);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7),
       width: double.infinity,
@@ -103,7 +104,7 @@ class CartCard extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => Provider.of<CartProvider>(context, listen: false).removeProduct(singleItem),
+                          onTap: () => removeProvider.removeProduct(singleItem),
                           child: Icon(
                             uiIcons['delete'],
                             color: NovaColors.chipsRed,

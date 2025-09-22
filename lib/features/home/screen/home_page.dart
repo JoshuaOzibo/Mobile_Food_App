@@ -21,13 +21,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    void fetchData() async{
-      final api = ApiRequest();
-    final foodData = await api.getFood();
-    print(foodData);
-     }
+    // void fetchData() async{
+    //   final api = ApiRequest();
+    // final foodData = await api.getFood();
+    // print(foodData);
+    //  }
 
-     fetchData();
+    //  fetchData();
     final pages = [
       Index(),
       CartScreen(

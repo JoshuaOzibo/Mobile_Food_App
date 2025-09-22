@@ -12,7 +12,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartItems = Provider.of<CartProvider>(context, listen: true).cart;
+    final cartItems = Provider.of<CartProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       appBar: AppBar(
@@ -51,7 +51,7 @@ class CartScreen extends StatelessWidget {
                     child: Center(
                       child: Text(
                         // textAlign: TextAlign.center,
-                        cartItems.length.toString(),
+                        cartItems.cart.length.toString(),
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -74,13 +74,13 @@ class CartScreen extends StatelessWidget {
               height: 460,
               child: ListView(
                 addSemanticIndexes: true,
-                semanticChildCount: cartItems.length,
+                semanticChildCount: cartItems.cart.length,
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 children: [
-                  if (cartItems.isEmpty)
+                  if (cartItems.cart.isEmpty)
                     Center(
                       child: Text('No item added to cart')),
-                  ...cartItems.map(
+                  ...cartItems.cart.map(
                     (item) => CartCard(
                       image: item['image'],
                       title: item['title'],
@@ -107,7 +107,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      Provider.of<CartProvider>(context).formattedPrice.toString(),
+                      cartItems.subTotal.toString(),
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w400,
@@ -126,7 +126,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '\$1.50',
+                      cartItems.deliveryFee.toString(),
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w400,
@@ -137,7 +137,7 @@ class CartScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 18),
-            const Row(
+             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -145,7 +145,7 @@ class CartScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 23, fontWeight: FontWeight.w400),
                 ),
                 Text(
-                  '\$13.94',
+                  cartItems.total.toString(),
                   style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
                 ),
               ],
