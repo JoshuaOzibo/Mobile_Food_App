@@ -5,6 +5,7 @@ import 'package:mobile_food_app/features/cart/screen/cart_screen.dart';
 import 'package:mobile_food_app/features/favorite/screen/favorite.dart';
 import 'package:mobile_food_app/features/home/screen/index.dart';
 import 'package:mobile_food_app/features/notification/screen/notification_screen.dart';
+import 'package:mobile_food_app/networks/api_request.dart';
 import 'package:mobile_food_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +18,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentBottomIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    void fetchData() async{
+      final api = ApiRequest();
+    final foodData = await api.getFood();
+    print(foodData);
+     }
+
+     fetchData();
     final pages = [
       Index(),
       CartScreen(

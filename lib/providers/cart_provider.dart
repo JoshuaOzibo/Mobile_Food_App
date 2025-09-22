@@ -22,6 +22,10 @@ class CartProvider extends ChangeNotifier {
   }
 }
 
+class ExtendedValue extends CartProvider {
+
+}
+
 
 
 
