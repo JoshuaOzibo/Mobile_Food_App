@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 
-class CartCard extends StatelessWidget {
-  const CartCard({super.key});
+class FavoriteCard extends StatelessWidget {
+  const FavoriteCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +21,18 @@ class CartCard extends StatelessWidget {
               Text('Spaghetti'),
               Text('with chips & cucumber'),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('\$6.22'),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                      color: NovaColors.searchBar,
-                      borderRadius: BorderRadius.circular(90),
+                      borderRadius: BorderRadius.circular(100),
+                      color: NovaColors.primaryOrange,
                     ),
-                    child: Row(
-                      children: [
-                        Icon(uiIcons['remove'], size: 20),
-                        Text('1'),
-                        Icon(uiIcons['add'], size: 20),
-                      ],
+                    child: GestureDetector(
+                      onTap: () => print('favorite'),
+                      child: Icon(uiIcons['add'], size: 20),
                     ),
                   ),
                 ],

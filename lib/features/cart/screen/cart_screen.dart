@@ -19,7 +19,7 @@ class CartScreen extends StatelessWidget {
         child: Column(
           children: [
             // Map with this card
-            NovaCard(),
+            CartCard(),
             Spacer(),
 
             Column(
