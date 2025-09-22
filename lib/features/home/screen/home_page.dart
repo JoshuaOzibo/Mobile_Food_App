@@ -33,7 +33,10 @@ class _HomePageState extends State<HomePage> {
       ),
       NotificationScreen(),
     ];
-    print(Provider.of<CartProvider>(context, listen: true).cart.length);
+    final cartLength = Provider.of<CartProvider>(
+      context,
+      listen: true,
+    ).cart.length;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       body: IndexedStack(index: currentBottomIndex, children: pages),
@@ -51,17 +54,18 @@ class _HomePageState extends State<HomePage> {
             icon: Stack(
               children: [
                 Icon(uiIcons['shopping_bag'], size: 20),
-                Positioned(
-                  left: 10,
-                  child: Container(
-                    height: 9,
-                    width: 9,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 229, 15, 0),
-                      borderRadius: BorderRadius.circular(100),
+                if (cartLength > 0)
+                  Positioned(
+                    left: 10,
+                    child: Container(
+                      height: 9,
+                      width: 9,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 229, 15, 0),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
             label: '.',

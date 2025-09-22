@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/components/card.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:mobile_food_app/providers/cart_provider.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key, required this.onNavigateHome});
@@ -10,6 +12,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartItems = Provider.of<CartProvider>(context, listen: true).cart;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       appBar: AppBar(
@@ -30,7 +33,35 @@ class CartScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
-            child: Icon(uiIcons['cart']),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Icon(uiIcons['cart']),
+                Positioned(
+                  left: 6,
+                  top: -8,
+                  child: Container(
+                    height: 15,
+                    width: 15,
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+
+                    child: Center(
+                      child: Text(
+                        // textAlign: TextAlign.center,
+                        cartItems.length.toString(),
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -39,7 +70,24 @@ class CartScreen extends StatelessWidget {
         child: Column(
           children: [
             // Map with this card
-            const CartCard(),
+            SizedBox(
+              height: 460,
+              child: ListView(
+                addSemanticIndexes: true,
+                semanticChildCount: cartItems.length,
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                children: [
+                  ...cartItems.map(
+                    (item) => CartCard(
+                      image: item['image'],
+                      title: item['title'],
+                      subTitle: item['subTitle'],
+                      price: item['price'],
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const Spacer(),
             const Column(
               spacing: 5,
