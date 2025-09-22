@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/components/card.dart';
 import 'package:mobile_food_app/core/icons.dart';
+import 'package:mobile_food_app/core/nova_colors.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -13,38 +14,104 @@ class CartScreen extends StatelessWidget {
         leadingWidth: 25,
         leading: Container(
           margin: EdgeInsets.only(left: 5),
-          child: Icon(uiIcons['arrow_back'])),
+          child: GestureDetector(
+            onTap: () => print('pop'),
+            child: Icon(uiIcons['arrow_back']),
+          ),
+        ),
         title: Text(
           textAlign: TextAlign.center,
           'My Cart',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
 
-        actions: [Padding(
-          padding: const EdgeInsets.only(right: 10.0),
-          child: Icon(uiIcons['cart']),
-        )],
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: Icon(uiIcons['cart']),
+          ),
+        ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           children: [
             // Map with this card
-            CartCard(),
-            Spacer(),
-            Column(
+           const CartCard(),
+           const Spacer(),
+            const Column(
+              spacing: 5,
               children: [
-                Row(children: [Text('Subtotal'), Text('\$12.44')]),
-                Row(children: [Text('Delivery Fee'), Text('\$1.50')]),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Subtotal',
+                      style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Text(
+                      '\$12.44',
+                      style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Delivery Fee',
+                      style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Text(
+                      '\$1.50',
+                      style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-            SizedBox(height: 10),
-            Row(children: [Text('TOTAL'), Text('\$13.94')]),
-            SizedBox(
-              height: 20,
+           const SizedBox(height: 18),
+           const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'TOTAL',
+                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.w400),
+                ),
+                Text(
+                  '\$13.94',
+                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+           const SizedBox(height: 30),
+           SizedBox(
+              width: double.infinity,
+              height: 60,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 209, 64, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 onPressed: () => print('Check out'),
-                child: Text('Checkout'),
+                child: Text(
+                  'Checkout',
+                  style: TextStyle(fontSize: 25, color: NovaColors.priceWhite),
+                ),
               ),
             ),
           ],
