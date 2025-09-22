@@ -10,13 +10,15 @@ class ProductCard extends StatelessWidget {
     required this.subTitle,
     required this.price,
     required this.handleProductTap,
+    required this.rating,
   });
 
   final String image;
   final String title;
   final String subTitle;
-  final String price;
+  final double price;
   final GestureTapCallback handleProductTap;
+  final double rating;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class ProductCard extends StatelessWidget {
                       spacing: 2,
                       children: [
                         Icon(uiIcons['star'], size: 13, color: NovaColors.primaryOrange,),
-                        Text('2.5', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+                        Text(rating.toString(), style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
                       ],
                     ),
                   )
@@ -80,7 +82,7 @@ class ProductCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(price),
+              Text(price.toString()),
               Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(

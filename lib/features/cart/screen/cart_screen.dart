@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_food_app/core/components/card.dart';
+import 'package:mobile_food_app/features/cart/components/card.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:provider/provider.dart';
@@ -77,19 +77,23 @@ class CartScreen extends StatelessWidget {
                 semanticChildCount: cartItems.length,
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 children: [
+                  if (cartItems.isEmpty)
+                    Center(
+                      child: Text('No item added to cart')),
                   ...cartItems.map(
                     (item) => CartCard(
                       image: item['image'],
                       title: item['title'],
                       subTitle: item['subTitle'],
                       price: item['price'],
+                      singleItem: item,
                     ),
                   ),
                 ],
               ),
             ),
             const Spacer(),
-            const Column(
+             Column(
               spacing: 5,
               children: [
                 Row(
@@ -103,7 +107,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '\$12.44',
+                      Provider.of<CartProvider>(context).formattedPrice.toString(),
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w400,

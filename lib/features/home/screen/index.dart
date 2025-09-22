@@ -155,6 +155,7 @@ class _IndexState extends State<Index> {
                       title: item['title'],
                       subTitle: item['subTitle'],
                       price: item['price'],
+                      rating: item['rating'],
                       handleProductTap: () {
                         Provider.of<CartProvider>(
                           context,

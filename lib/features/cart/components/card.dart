@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
+import 'package:mobile_food_app/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class CartCard extends StatelessWidget {
   const CartCard({
@@ -9,12 +11,14 @@ class CartCard extends StatelessWidget {
     required this.title,
     required this.subTitle,
     required this.price,
+    required this.singleItem,
   });
 
   final String image;
   final String title;
   final String subTitle;
-  final String price;
+  final double price;
+  final Map<String, dynamic> singleItem;
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +102,13 @@ class CartCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Icon(
-                          uiIcons['delete'],
-                          color: NovaColors.chipsRed,
-                          size: 32,
+                        GestureDetector(
+                          onTap: () => Provider.of<CartProvider>(context, listen: false).removeProduct(singleItem),
+                          child: Icon(
+                            uiIcons['delete'],
+                            color: NovaColors.chipsRed,
+                            size: 32,
+                          ),
                         ),
                       ],
                     ),
