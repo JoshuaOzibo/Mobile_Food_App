@@ -9,7 +9,7 @@ class CartCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
         color: NovaColors.cardDark,
         borderRadius: BorderRadius.circular(10),
@@ -52,39 +52,49 @@ class CartCard extends StatelessWidget {
                       '\$6.22',
                       style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
 
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: NovaColors.searchBar,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        spacing: 15,
-                        children: [
-                          GestureDetector(
-                            onTap: () => print('Decrement'),
-                            child: Icon(uiIcons['remove'], size: 23),
+                    Row(
+                      spacing: 8,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 6,
                           ),
-                          Text(
-                            '1',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          decoration: BoxDecoration(
+                            color: NovaColors.searchBar,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          GestureDetector(
-                            onTap: () => print('Increase'),
-                            child: Icon(uiIcons['add'], size: 23),
+                          child: Row(
+                            spacing: 15,
+                            children: [
+                              GestureDetector(
+                                onTap: () => print('Decrement'),
+                                child: Icon(uiIcons['remove'], size: 23),
+                              ),
+                              Text(
+                                '1',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () => print('Increase'),
+                                child: Icon(uiIcons['add'], size: 23),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        Icon(
+                          uiIcons['delete'],
+                          color: NovaColors.chipsRed,
+                          size: 32,
+                        ),
+                      ],
                     ),
                   ],
                 ),

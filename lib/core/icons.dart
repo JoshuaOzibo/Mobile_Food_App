@@ -18,4 +18,5 @@ final Map<String, dynamic> uiIcons = {
   "cart": Icons.shopping_cart,
   "shopping_bag": Icons.shopping_bag,
   "payment": Icons.payment,
+  "delete": Icons.delete_forever_outlined
 };
