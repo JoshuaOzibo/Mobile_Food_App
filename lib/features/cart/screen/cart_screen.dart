@@ -7,6 +7,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       appBar: AppBar(
         title: Text(
           textAlign: TextAlign.center,
@@ -21,18 +22,14 @@ class CartScreen extends StatelessWidget {
             // Map with this card
             CartCard(),
             Spacer(),
-
             Column(
               children: [
                 Row(children: [Text('Subtotal'), Text('\$12.44')]),
                 Row(children: [Text('Delivery Fee'), Text('\$1.50')]),
               ],
             ),
-
             SizedBox(height: 10),
-
             Row(children: [Text('TOTAL'), Text('\$13.94')]),
-
             SizedBox(
               height: 20,
               child: ElevatedButton(

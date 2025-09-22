@@ -8,38 +8,88 @@ class CartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       decoration: BoxDecoration(
         color: NovaColors.cardDark,
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
+        spacing: 20,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(''),
-          Column(
-            children: [
-              Text('Spaghetti'),
-              Text('with chips & cucumber'),
-              Row(
-                children: [
-                  Text('\$6.22'),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: NovaColors.searchBar,
-                      borderRadius: BorderRadius.circular(90),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(uiIcons['remove'], size: 20),
-                        Text('1'),
-                        Icon(uiIcons['add'], size: 20),
-                      ],
-                    ),
-                  ),
-                ],
+          Container(
+            height: 80,
+            width: 80,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+            child: ClipRRect(
+              borderRadius: BorderRadiusGeometry.circular(100),
+              child: Image.asset(
+                fit: BoxFit.cover,
+                'assets/images/chilli-9202873_1280.jpg',
               ),
-            ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              spacing: 5,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Spaghetti',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'with chips & cucumber',
+                  style: TextStyle(fontSize: 16, color: NovaColors.textGray),
+                ),
+
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '\$6.22',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: NovaColors.searchBar,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        spacing: 15,
+                        children: [
+                          GestureDetector(
+                            onTap: () => print('Decrement'),
+                            child: Icon(uiIcons['remove'], size: 23),
+                          ),
+                          Text(
+                            '1',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () => print('Increase'),
+                            child: Icon(uiIcons['add'], size: 23),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
