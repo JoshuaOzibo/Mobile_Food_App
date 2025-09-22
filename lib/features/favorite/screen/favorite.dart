@@ -3,7 +3,9 @@ import 'package:mobile_food_app/core/components/favorite_card.dart';
 import 'package:mobile_food_app/core/icons.dart';
 
 class FavoriteScreen extends StatelessWidget {
-  const FavoriteScreen({super.key});
+  const FavoriteScreen({super.key, required this.onNavigateHome});
+
+ final VoidCallback onNavigateHome;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,10 @@ class FavoriteScreen extends StatelessWidget {
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       appBar: AppBar(
         leadingWidth: 30,
-        leading: Icon(uiIcons['arrow_back']),
+        leading: GestureDetector(
+          onTap: onNavigateHome,
+          child: Icon(uiIcons['arrow_back']),
+        ),
         title: const Align(
           alignment: Alignment.center,
           child: Text(

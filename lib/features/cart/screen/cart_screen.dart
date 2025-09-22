@@ -4,7 +4,9 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+  const CartScreen({super.key, required this.onNavigateHome});
+
+  final VoidCallback onNavigateHome;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class CartScreen extends StatelessWidget {
         leading: Container(
           margin: EdgeInsets.only(left: 5),
           child: GestureDetector(
-            onTap: () => print('pop'),
+            onTap: onNavigateHome,
             child: Icon(uiIcons['arrow_back']),
           ),
         ),

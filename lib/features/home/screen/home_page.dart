@@ -15,16 +15,28 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-int currentBottomIndex = 0;
-final pages = [Index(), CartScreen(), FavoriteScreen(), NotificationScreen()];
-
 class _HomePageState extends State<HomePage> {
+  int currentBottomIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      Index(),
+      CartScreen(
+        onNavigateHome: () => setState(() {
+          currentBottomIndex = 0;
+        }),
+      ),
+      FavoriteScreen(
+        onNavigateHome: () => setState(() {
+          currentBottomIndex = 0;
+        }),
+      ),
+      NotificationScreen(),
+    ];
     print(Provider.of<CartProvider>(context, listen: true).cart.length);
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
-      body: pages[currentBottomIndex],
+      body: IndexedStack(index: currentBottomIndex, children: pages),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentBottomIndex,
         onTap: ((item) => setState(() {
