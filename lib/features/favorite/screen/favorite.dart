@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_food_app/core/components/favorite_card.dart';
+import 'package:mobile_food_app/features/favorite/component/favorite_card.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_food_app/core/components/empty_state.dart';
 import 'package:mobile_food_app/features/cart/components/card.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
@@ -78,7 +79,14 @@ class CartScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 children: [
                   if (cartItems.cart.isEmpty)
-                    Center(child: Text('No item added to cart')),
+                    Center(
+                      child: SizedBox(
+                        height: 400,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: EmptyState(text: 'Cart')),
+                      )),
+                    
                   ...cartItems.cart.map(
                     (item) => CartCard(
                       image: item['image'],
