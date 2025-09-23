@@ -11,6 +11,8 @@ class ProductCard extends StatelessWidget {
     required this.price,
     required this.handleProductTap,
     required this.rating,
+    required this.handleTapedLiked,
+    required this.isClicked,
   });
 
   final String image;
@@ -19,6 +21,8 @@ class ProductCard extends StatelessWidget {
   final double price;
   final GestureTapCallback handleProductTap;
   final double rating;
+  final VoidCallback handleTapedLiked;
+  final bool isClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +90,15 @@ class ProductCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('\$${price.toString()}'),
-              Container(
+              Row(
+                spacing: 10,
+                children: [
+                  isClicked ? 
+                  Icon(uiIcons['favorite'], size: 25, color: NovaColors.lightOrange,) : 
+                  GestureDetector(
+                    onTap: handleTapedLiked,
+                    child: Icon(uiIcons['favorite_border'], size: 25, color: NovaColors.lightOrange,)),
+                  Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
@@ -97,6 +109,8 @@ class ProductCard extends StatelessWidget {
                   child: Icon(uiIcons['add'], size: 20),
                 ),
               ),
+                ],
+              )
             ],
           ),
         ],

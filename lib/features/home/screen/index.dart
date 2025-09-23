@@ -15,11 +15,13 @@ class Index extends StatefulWidget {
 }
 
 bool isTextSelected = true;
+bool isFavoriteClicked = false;
 String selectedText = 'Pasta';
 
 class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
+    final providerHandler = Provider.of<CartProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -157,10 +159,15 @@ class _IndexState extends State<Index> {
                       price: item['price'],
                       rating: item['rating'],
                       handleProductTap: () {
-                        Provider.of<CartProvider>(
-                          context,
-                          listen: false,
-                        ).addProduct(item);
+                        providerHandler.addProduct(item);
+                      },
+
+                      isClicked: isFavoriteClicked,
+                      handleTapedLiked: () {
+                        providerHandler.addProduct(item);
+                        setState(() {
+                          isFavoriteClicked = true;
+                        });
                       },
                     ),
                   ),
