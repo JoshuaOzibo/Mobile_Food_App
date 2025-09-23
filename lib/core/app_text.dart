@@ -14,8 +14,10 @@ const List<String> filterText = [
   "Smoothie",
 ];
 
-const List<Map<String, dynamic>> productList = [
+final List<Map<String, dynamic>> productList = [
   {
+    "id": 1,
+    "quantity": 1,
     "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Spaghetti",
     "subTitle": "With Chips & Cucumber",
@@ -23,6 +25,8 @@ const List<Map<String, dynamic>> productList = [
     "rating": 2.5,
   },
   {
+    "id": 2,
+    "quantity": 1,
     "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Libguine",
     "subTitle": "With Chips & Cucumber",
@@ -30,6 +34,8 @@ const List<Map<String, dynamic>> productList = [
     "rating": 2.2,
   },
   {
+    "id": 3,
+    "quantity": 1,
     "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Spaghetti",
     "subTitle": "With Chips & Cucumber",
@@ -37,6 +43,8 @@ const List<Map<String, dynamic>> productList = [
     "rating": 1.5,
   },
   {
+    "id": 4,
+   "quantity": 1,
     "image": 'assets/images/squirrel-619968_1280.jpg',
     "title": "Libguine",
     "subTitle": "With Chips & Cucumber",

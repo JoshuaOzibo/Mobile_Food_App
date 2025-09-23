@@ -12,17 +12,19 @@ class CartCard extends StatelessWidget {
     required this.subTitle,
     required this.price,
     required this.singleItem,
+    required this.quantity,
   });
 
   final String image;
   final String title;
   final String subTitle;
   final double price;
+  final int quantity;
   final Map<String, dynamic> singleItem;
 
   @override
   Widget build(BuildContext context) {
-    final removeProvider = Provider.of<CartProvider>(context, listen: false);
+    final productProvider = Provider.of<CartProvider>(context, listen: false);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7),
       width: double.infinity,
@@ -49,9 +51,16 @@ class CartCard extends StatelessWidget {
               spacing: 5,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
                   title,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+
+                Text('X ${quantity.toString()}', style: TextStyle(color: NovaColors.priceWhite),),
+                  ],
                 ),
                 Text(
                   subTitle,
@@ -63,7 +72,7 @@ class CartCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      price.toString(),
+                      '\$${price.toString()}',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -86,7 +95,7 @@ class CartCard extends StatelessWidget {
                             spacing: 15,
                             children: [
                               GestureDetector(
-                                onTap: () => print('Decrement'),
+                                onTap: () => productProvider.decrement(singleItem),
                                 child: Icon(uiIcons['remove'], size: 23),
                               ),
                               Text(
@@ -97,14 +106,14 @@ class CartCard extends StatelessWidget {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () => print('Increase'),
+                                onTap: () => productProvider.increment(singleItem),
                                 child: Icon(uiIcons['add'], size: 23),
                               ),
                             ],
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => removeProvider.removeProduct(singleItem),
+                          onTap: () => productProvider.removeProduct(singleItem),
                           child: Icon(
                             uiIcons['delete'],
                             color: NovaColors.chipsRed,

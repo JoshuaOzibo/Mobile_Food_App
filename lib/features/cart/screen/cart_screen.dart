@@ -85,6 +85,7 @@ class CartScreen extends StatelessWidget {
                       title: item['title'],
                       subTitle: item['subTitle'],
                       price: item['price'],
+                      quantity: item['quantity'],
                       singleItem: item,
                     ),
                   ),
@@ -106,7 +107,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      cartItems.subTotal.toString(),
+                      '\$${cartItems.subTotal.toString()}',
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w400,
@@ -125,7 +126,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      cartItems.deliveryFee.toString(),
+                      '\$${cartItems.deliveryFee.toString()}',
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w400,
@@ -144,7 +145,7 @@ class CartScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 23, fontWeight: FontWeight.w400),
                 ),
                 Text(
-                  cartItems.total.toString(),
+                  '\$${cartItems.total.toString()}',
                   style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
                 ),
               ],

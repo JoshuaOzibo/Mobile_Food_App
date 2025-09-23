@@ -85,7 +85,7 @@ class ProductCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(price.toString()),
+              Text('\$${price.toString()}'),
               Container(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
