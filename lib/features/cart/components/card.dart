@@ -43,7 +43,7 @@ class CartCard extends StatelessWidget {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
             child: ClipRRect(
               borderRadius: BorderRadiusGeometry.circular(100),
-              child: Image.asset(fit: BoxFit.cover, image),
+              child: Image.network(fit: BoxFit.cover, image),
             ),
           ),
           Expanded(

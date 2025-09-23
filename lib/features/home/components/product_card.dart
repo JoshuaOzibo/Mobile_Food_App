@@ -47,8 +47,9 @@ class ProductCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(10),
-                  child: Image.asset(
+                  child: Image.network(
                     image,
+                    width: double.infinity,
                     height: double.infinity, 
                     fit: BoxFit.cover,
                     ),

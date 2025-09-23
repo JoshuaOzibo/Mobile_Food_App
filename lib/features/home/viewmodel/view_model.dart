@@ -1,6 +1,6 @@
 import 'package:mobile_food_app/networks/api_request.dart';
 
-class fetchHomeData {
+class FetchHomeData {
   Future<Map<String, dynamic>?> fetchData({required String letter}) async {
     try {
       final api = ApiRequest(
@@ -10,7 +10,7 @@ class fetchHomeData {
       print('success fetching food data');
       return foodData;
     } catch (e) {
-      print('error getting data $e');
+      print('error fetching food data $e');
       return null;
     }
   }

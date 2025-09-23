@@ -70,7 +70,6 @@ class CartScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           children: [
-            // Map with this card
             SizedBox(
               height: 460,
               child: ListView(
@@ -86,6 +85,7 @@ class CartScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: EmptyState(text: 'Cart')),
                       )),
+                      
                     
                   ...cartItems.cart.map(
                     (item) => CartCard(

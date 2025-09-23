@@ -12,6 +12,7 @@ class CartProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+  
 
   void removeProduct(Map<String, dynamic> product) {
     cart.remove(product);

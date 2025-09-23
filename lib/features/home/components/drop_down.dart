@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Dropdown extends StatefulWidget {
-  const Dropdown({super.key});
+  const Dropdown({super.key, required this.handleSelectLetter});
+
+  final handleSelectLetter;
 
   @override
   State<Dropdown> createState() => _DropdownState();
@@ -30,9 +32,11 @@ class _DropdownState extends State<Dropdown> {
         );
       }).toList(),
       onChanged: (value) {
-        setState(() {
-          selectedValue = value;
-        });
+          setState(() {
+            selectedValue = value;
+          });
+          widget.handleSelectLetter(value);
+        
       },
     );
   }

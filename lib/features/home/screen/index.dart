@@ -7,6 +7,7 @@ import 'package:mobile_food_app/features/home/components/product_card.dart';
 import 'package:mobile_food_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_food_app/features/home/components/drop_down.dart';
+import 'package:mobile_food_app/features/home/viewmodel/view_model.dart';
 
 class Index extends StatefulWidget {
   const Index({super.key});
@@ -18,8 +19,31 @@ class Index extends StatefulWidget {
 bool isTextSelected = true;
 bool isFavoriteClicked = false;
 String selectedText = 'Pasta';
+String letterValue = 'a';
+final homeFoodFetcher = FetchHomeData();
+List<dynamic>? meals = [];
 
 class _IndexState extends State<Index> {
+  @override
+  void initState() {
+    super.initState();
+    _fetchMeals();
+  }
+
+  Future<void> _fetchMeals() async {
+    final data = await homeFoodFetcher.fetchData(letter: letterValue);
+    if (data != null && data['meals'] != null) {
+      setState(() {
+        meals!.addAll(data['meals']);
+      });
+      print(letterValue);
+    } else {
+      setState(() {
+        meals = [];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final providerHandler = Provider.of<CartProvider>(context, listen: false);
@@ -97,30 +121,39 @@ class _IndexState extends State<Index> {
               child: Row(
                 spacing: 10,
                 children: [
-                  Expanded(child: TextField(
-                    autocorrect: true,
-                    autofillHints: Characters(''),
-                    decoration: InputDecoration(
-                      hint: const Text(
-                        'search for your food',
-                        style: TextStyle(
-                          color: NovaColors.textGray,
-                          fontSize: 16,
+                  Expanded(
+                    child: TextField(
+                      autocorrect: true,
+                      autofillHints: Characters(''),
+                      decoration: InputDecoration(
+                        hint: const Text(
+                          'search for your food',
+                          style: TextStyle(
+                            color: NovaColors.textGray,
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      suffixIcon: Icon(uiIcons['search']),
-                      suffixIconColor: NovaColors.textGray,
-                      fillColor: NovaColors.searchBar,
-                      filled: true,
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide.none,
+                        suffixIcon: Icon(uiIcons['search']),
+                        suffixIconColor: NovaColors.textGray,
+                        fillColor: NovaColors.searchBar,
+                        filled: true,
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
                       ),
                     ),
                   ),
-                  ),
                   SizedBox(
                     height: 60,
-                    width: 100, child: Dropdown()
+                    width: 100,
+                    child: Dropdown(
+                      handleSelectLetter: (item) {
+                        setState(() {
+                          letterValue = item;
+                        });
+                        _fetchMeals();
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -161,26 +194,42 @@ class _IndexState extends State<Index> {
               child: GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.74,
+                  childAspectRatio: 0.68,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 20,
                 ),
 
                 children: [
-                  ...productList.map(
-                    (item) => ProductCard(
-                      image: item['image'],
-                      title: item['title'],
-                      subTitle: item['subTitle'],
-                      price: item['price'],
-                      rating: item['rating'],
+                  ...meals!.map(
+                    (meal) => ProductCard(
+                      image: meal['strMealThumb'],
+                      title: meal['strMeal'],
+                      subTitle: meal['strCategory'],
+                      price: (5 + (meal['idMeal'].hashCode % 20)).toDouble(),
+                      rating: (meal['idMeal'].hashCode % 5) + 1,
                       handleProductTap: () {
-                        providerHandler.addProduct(item);
+                        providerHandler.addProduct({
+                          "image": meal['strMealThumb'],
+                          "title": meal['strMeal'],
+                          "subTitle": meal['strCategory'],
+                          "price": (5 + (meal['idMeal'].hashCode % 20))
+                              .toDouble(),
+                          "rating": (meal['idMeal'].hashCode % 5) + 1,
+                          "quantity": 1,
+                        });
                       },
 
                       isClicked: isFavoriteClicked,
                       handleTapedLiked: () {
-                        providerHandler.addProduct(item);
+                        providerHandler.addProduct({
+                          "image": meal['strMealThumb'],
+                          "title": meal['strMeal'],
+                          "subTitle": meal['strCategory'],
+                          "price": (5 + (meal['idMeal'].hashCode % 20))
+                              .toDouble(),
+                          "rating": (meal['idMeal'].hashCode % 5) + 1,
+                          "quantity": (meal['idMeal'].hashCode % 5) + 1,
+                        });
                         setState(() {
                           isFavoriteClicked = true;
                         });
