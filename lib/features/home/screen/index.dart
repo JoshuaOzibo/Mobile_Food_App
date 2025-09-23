@@ -209,6 +209,7 @@ class _IndexState extends State<Index> {
                       rating: (meal['idMeal'].hashCode % 5) + 1,
                       handleProductTap: () {
                         providerHandler.addProduct({
+                          "index": meal['idMeal'],
                           "image": meal['strMealThumb'],
                           "title": meal['strMeal'],
                           "subTitle": meal['strCategory'],

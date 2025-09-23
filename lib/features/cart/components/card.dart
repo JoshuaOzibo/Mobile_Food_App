@@ -30,7 +30,7 @@ class CartCard extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
-        color: NovaColors.cardDark,
+        color: NovaColors.cardColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(

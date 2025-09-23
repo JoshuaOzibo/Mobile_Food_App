@@ -5,14 +5,15 @@ class CartProvider extends ChangeNotifier {
   final double deliveryFee = 1.50;
 
   void addProduct(Map<String, dynamic> product) {
-    if (cart.contains(product)) {
-      return;
-    } else {
-      cart.add(product);
-    }
+   final exists = cart.any((item) => item['index'] == product['index']);
+   if(!exists){
+    cart.add(product);
     notifyListeners();
+   }else{
+    print('item exist');
+    return;
+   }
   }
-  
 
   void removeProduct(Map<String, dynamic> product) {
     cart.remove(product);
@@ -35,13 +36,13 @@ class CartProvider extends ChangeNotifier {
   }
 
   void increment(product) {
-    final index = cart.indexWhere((index) => index['id'] == product['id']);
+    final index = cart.indexWhere((index) => index['index'] == product['index']);
     cart[index]['quantity'] += 1;
     notifyListeners();
   }
 
   void decrement(product) {
-    final index = cart.indexWhere((index) => index['id'] == product['id']);
+    final index = cart.indexWhere((index) => index['index'] == product['index']);
     if (product['quantity'] == 1) {
       cart.removeAt(index);
     } else {
