@@ -6,6 +6,7 @@ import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
 import 'package:mobile_food_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_food_app/features/home/components/drop_down.dart';
 
 class Index extends StatefulWidget {
   const Index({super.key});
@@ -93,20 +94,35 @@ class _IndexState extends State<Index> {
             padding: const EdgeInsets.all(10.0),
             child: SizedBox(
               height: 50,
-              child: TextField(
-                autocorrect: true,
-                autofillHints: Characters(''),
-                decoration: InputDecoration(
-                  hint: const Text(
-                    'search for your food',
-                    style: TextStyle(color: NovaColors.textGray, fontSize: 16),
+              child: Row(
+                spacing: 10,
+                children: [
+                  Expanded(child: TextField(
+                    autocorrect: true,
+                    autofillHints: Characters(''),
+                    decoration: InputDecoration(
+                      hint: const Text(
+                        'search for your food',
+                        style: TextStyle(
+                          color: NovaColors.textGray,
+                          fontSize: 16,
+                        ),
+                      ),
+                      suffixIcon: Icon(uiIcons['search']),
+                      suffixIconColor: NovaColors.textGray,
+                      fillColor: NovaColors.searchBar,
+                      filled: true,
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
                   ),
-                  suffixIcon: Icon(uiIcons['search']),
-                  suffixIconColor: NovaColors.textGray,
-                  fillColor: NovaColors.searchBar,
-                  filled: true,
-                  border: const OutlineInputBorder(borderSide: BorderSide.none),
-                ),
+                  ),
+                  SizedBox(
+                    height: 60,
+                    width: 100, child: Dropdown()
+                  ),
+                ],
               ),
             ),
           ),

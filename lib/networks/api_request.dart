@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiRequest {
+  String url;
+  ApiRequest({required this.url});
   Future<Map<String, dynamic>?> getFood() async {
     try {
-      final res = await http.get(Uri.parse('https://www.themealdb.com/api/json/v1/1/search.php?s=Migas'));
-
+      final res = await http.get(Uri.parse(url));
       if (res.statusCode == 200) {
         final data = jsonDecode(res.body);
-        print(data);
-        return data;
+        return data.body;
       } else {
         print("Request failed with status code ${res.statusCode}");
         return null;

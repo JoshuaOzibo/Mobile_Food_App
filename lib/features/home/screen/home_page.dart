@@ -16,18 +16,17 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+
 class _HomePageState extends State<HomePage> {
   int currentBottomIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    // fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // void fetchData() async{
-    //   final api = ApiRequest();
-    // final foodData = await api.getFood();
-    // print(foodData);
-    //  }
-
-    //  fetchData();
     final pages = [
       Index(),
       CartScreen(
