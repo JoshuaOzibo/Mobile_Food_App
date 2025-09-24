@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_food_app/features/favorite/component/favorite_class.dart';
 
 class CartProvider extends ChangeNotifier {
   final List<Map<String, dynamic>> cart = [];
@@ -53,12 +54,18 @@ class CartProvider extends ChangeNotifier {
   }
 }
 
-// class FavoriteItem extends CartProvider {
-//   void addFavorite(product) {
-//     favoriteList.add(product);
-//     notifyListeners();
-//   }
-// }
+class FavoriteItemProvider extends ChangeNotifier {
+    List<FavoriteClass> favoriteList = [];
+
+    // void addProduct(Map<String, dynamic> product){
+    //   cart.add(product);
+    // }
+
+  void addFavorite( FavoriteClass product) {
+    favoriteList.add(product);
+    notifyListeners();
+  }
+}
 
 class NotificationProvider extends ChangeNotifier {
   List<String> notification = ["Hello", "app"];

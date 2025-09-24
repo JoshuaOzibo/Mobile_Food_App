@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
+import 'package:mobile_food_app/features/favorite/component/favorite_class.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
 import 'package:mobile_food_app/providers/cart_provider.dart';
@@ -47,6 +48,10 @@ class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     final providerHandler = Provider.of<CartProvider>(context, listen: false);
+    final favoriteProviderHandler = Provider.of<FavoriteItemProvider>(
+      context,
+      listen: false,
+    );
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -219,18 +224,16 @@ class _IndexState extends State<Index> {
                           "quantity": 1,
                         });
                       },
-
                       isClicked: isFavoriteClicked,
                       handleTapedLiked: () {
-                        providerHandler.addProduct({
-                          "image": meal['strMealThumb'],
-                          "title": meal['strMeal'],
-                          "subTitle": meal['strCategory'],
-                          "price": (5 + (meal['idMeal'].hashCode % 20))
-                              .toDouble(),
-                          "rating": (meal['idMeal'].hashCode % 5) + 1,
-                          "quantity": (meal['idMeal'].hashCode % 5) + 1,
-                        });
+                        favoriteProviderHandler.addFavorite(
+                          FavoriteClass(
+                            image: meal['image'],
+                            price: meal['price'],
+                            subTitle: meal['subTitle'],
+                            title: meal['title'],
+                          ),
+                        );
                         setState(() {
                           isFavoriteClicked = true;
                         });
