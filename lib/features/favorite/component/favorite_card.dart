@@ -3,12 +3,22 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 
 class FavoriteCard extends StatelessWidget {
-  const FavoriteCard({super.key, required this.image, required this.title, required this.subTitle, required this.price});
+  const FavoriteCard({
+    super.key,
+    required this.image,
+    required this.title,
+    required this.subTitle,
+    required this.price,
+    required this.handleRemoveFavoriteItemFromList,
+    required this.handleAddToCart,
+  });
 
   final String image;
   final String title;
   final String subTitle;
   final int price;
+  final VoidCallback handleRemoveFavoriteItemFromList;
+  final VoidCallback handleAddToCart;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +40,7 @@ class FavoriteCard extends StatelessWidget {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
             child: ClipRRect(
               borderRadius: BorderRadiusGeometry.circular(100),
-              child: Image.network(
-                fit: BoxFit.cover,
-                image,
-              ),
+              child: Image.network(fit: BoxFit.cover, image),
             ),
           ),
           Expanded(
@@ -72,14 +79,17 @@ class FavoriteCard extends StatelessWidget {
                             color: NovaColors.primaryOrange,
                           ),
                           child: GestureDetector(
-                            onTap: () => print('add to cart'),
+                            onTap: handleAddToCart,
                             child: Icon(uiIcons['add'], size: 20),
                           ),
                         ),
-                        Icon(
-                          uiIcons['delete'],
-                          color: NovaColors.chipsRed,
-                          size: 32,
+                        GestureDetector(
+                          onTap: handleRemoveFavoriteItemFromList,
+                          child: Icon(
+                            uiIcons['delete'],
+                            color: NovaColors.chipsRed,
+                            size: 32,
+                          ),
                         ),
                       ],
                     ),

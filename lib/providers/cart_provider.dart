@@ -58,13 +58,18 @@ class FavoriteItemProvider extends ChangeNotifier {
     final CartProvider cartProvider = CartProvider();
     List<FavoriteClass> favoriteList = [];
 
-    void addProduct(Map<String, dynamic> product){
+    void addProduct( product){
       cartProvider.addProduct(product);
       notifyListeners();
     }
 
   void addFavorite( FavoriteClass product) {
     favoriteList.add(product);
+    notifyListeners();
+  }
+
+  void removeFavorite( FavoriteClass product) {
+    favoriteList.remove(product);
     notifyListeners();
   }
 

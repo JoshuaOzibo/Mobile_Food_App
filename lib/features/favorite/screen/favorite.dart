@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_food_app/core/components/empty_state.dart';
 import 'package:mobile_food_app/features/favorite/component/favorite_card.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
@@ -12,10 +13,14 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fatchFavoriteProvider = Provider.of<FavoriteItemProvider>(
+      context,
+      listen: true,
+    ).favoriteList;
     final favoriteProvider = Provider.of<FavoriteItemProvider>(
       context,
       listen: false,
-    ).favoriteList;
+    );
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -46,12 +51,19 @@ class FavoriteScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  ...favoriteProvider.map(
+                  if (fatchFavoriteProvider.isEmpty)
+                    Container(
+                      margin: EdgeInsets.only(top: 150),
+                      child: EmptyState(text: 'Favourite ')),
+                  ...fatchFavoriteProvider.map(
                     (item) => FavoriteCard(
                       image: item.image,
                       title: item.title,
                       subTitle: item.subTitle,
                       price: item.price,
+                      handleRemoveFavoriteItemFromList: () =>
+                          favoriteProvider.removeFavorite(item),
+                          handleAddToCart:() => favoriteProvider.addProduct(item),
                     ),
                   ),
                 ],
