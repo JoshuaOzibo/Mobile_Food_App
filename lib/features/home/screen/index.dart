@@ -228,15 +228,15 @@ class _IndexState extends State<Index> {
                       handleTapedLiked: () {
                         favoriteProviderHandler.addFavorite(
                           FavoriteClass(
-                            image: meal['image'],
-                            price: meal['price'],
-                            subTitle: meal['subTitle'],
-                            title: meal['title'],
+                            image: meal['strMealThumb'],
+                            price: (5 + (meal['idMeal'].hashCode % 20)),
+                            subTitle: meal['strCategory'],
+                            title: meal['strMeal'],
                           ),
                         );
-                        setState(() {
-                          isFavoriteClicked = true;
-                        });
+                        // setState(() {
+                        //   isFavoriteClicked = true;
+                        // });
                       },
                     ),
                   ),
