@@ -39,6 +39,10 @@ class _HomePageState extends State<HomePage> {
       context,
       listen: true,
     ).cart.length;
+    final favoriteLength = Provider.of<FavoriteItemProvider>(
+      context,
+      listen: true,
+    ).favoriteList.length;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       body: IndexedStack(index: currentBottomIndex, children: pages),
@@ -76,6 +80,7 @@ class _HomePageState extends State<HomePage> {
             icon: Stack(
               children: [
                 Icon(uiIcons['favorite'], size: 20),
+                if(favoriteLength > 0)
                 Positioned(
                   left: 10,
                   child: Container(
