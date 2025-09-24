@@ -3,11 +3,17 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 
 class FavoriteCard extends StatelessWidget {
-  const FavoriteCard({super.key});
+  const FavoriteCard({super.key, required this.image, required this.title, required this.subTitle, required this.price});
+
+  final String image;
+  final String title;
+  final String subTitle;
+  final int price;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 8),
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
@@ -24,9 +30,9 @@ class FavoriteCard extends StatelessWidget {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
             child: ClipRRect(
               borderRadius: BorderRadiusGeometry.circular(100),
-              child: Image.asset(
+              child: Image.network(
                 fit: BoxFit.cover,
-                'assets/images/chilli-9202873_1280.jpg',
+                image,
               ),
             ),
           ),
@@ -36,11 +42,11 @@ class FavoriteCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Spaghetti',
+                  title,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'with chips & cucumber',
+                  subTitle,
                   style: TextStyle(fontSize: 16, color: NovaColors.textGray),
                 ),
 
@@ -49,7 +55,7 @@ class FavoriteCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$6.22',
+                      '\$${price.toString()}',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,

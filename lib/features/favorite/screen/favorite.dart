@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_food_app/features/favorite/component/favorite_card.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
+import 'package:mobile_food_app/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key, required this.onNavigateHome});
@@ -10,6 +12,10 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final favoriteProvider = Provider.of<FavoriteItemProvider>(
+      context,
+      listen: false,
+    ).favoriteList;
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -35,7 +41,24 @@ class FavoriteScreen extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: const Column(children: [SizedBox(height: 20), FavoriteCard()]),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  ...favoriteProvider.map(
+                    (item) => FavoriteCard(
+                      image: item.image,
+                      title: item.title,
+                      subTitle: item.subTitle,
+                      price: item.price,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
