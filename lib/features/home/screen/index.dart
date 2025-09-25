@@ -4,7 +4,6 @@ import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
 import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/features/details/screen/food_details.dart';
-import 'package:mobile_food_app/models/favorite_class.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
 import 'package:mobile_food_app/models/product_class.dart';
@@ -241,35 +240,29 @@ class _IndexState extends State<Index> {
                         handleProductTap: () {
                           providerHandler.addProduct(
                             ProductClass(
-                              index: meal['idMeal'], 
-                              image: meal['strMealThumb'], 
-                              price: (5 + (meal['idMeal'].hashCode % 20)), 
-                              quantity: 1, 
-                              rating: (meal['idMeal'].hashCode % 5) + 1, 
-                              subTitle: meal['strCategory'], 
+                              index: meal['idMeal'],
+                              image: meal['strMealThumb'],
+                              price: (5 + (meal['idMeal'].hashCode % 20)),
+                              quantity: 1,
+                              rating: (meal['idMeal'].hashCode % 5) + 1,
+                              subTitle: meal['strCategory'],
                               title: limitToTwoWords(meal['strMeal']),
                             ),
-                            // "index": meal['idMeal'],
-                            // "image": meal['strMealThumb'],
-                            // "title": limitToTwoWords(meal['strMeal']),
-                            // "subTitle": meal['strCategory'],
-                            // "price": (5 + (meal['idMeal'].hashCode % 20))
-                            //     .toDouble(),
-                            // "rating": (meal['idMeal'].hashCode % 5) + 1,
-                            // "quantity": 1,
                           );
                         },
                         isClicked: isFavoriteClicked,
                         handleTapedLiked: () {
                           favoriteProviderHandler.addFavorite(
-                            FavoriteClass(
+                            ProductClass(
                               image: meal['strMealThumb'],
                               price: (5 + (meal['idMeal'].hashCode % 20)),
                               subTitle: meal['strCategory'],
                               title: limitToTwoWords(meal['strMeal']),
+                              index: meal['idMeal'],
+                              quantity: 1,
+                              rating: (meal['idMeal'].hashCode % 5) + 1,
                             ),
                           );
-                       
                         },
 
                         handleTapSingleProduct: () => Navigator.push(

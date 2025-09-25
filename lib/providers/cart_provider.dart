@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_food_app/models/favorite_class.dart';
 import 'package:mobile_food_app/models/product_class.dart';
 
 class CartProvider extends ChangeNotifier {
@@ -7,15 +6,14 @@ class CartProvider extends ChangeNotifier {
   final double deliveryFee = 1.50;
 
   void addProduct(ProductClass product) {
-   final exists = cart.any((item) => item.index == product.index);
-   if(!exists){
-    cart.add(product);
-    print(product);
-    notifyListeners();
-   }else{
-    print('item exist');
-    return;
-   }
+    final exists = cart.any((item) => item.index == product.index);
+    if (!exists) {
+      cart.add(product);
+      notifyListeners();
+    } else {
+      print('item exist');
+      return;
+    }
   }
 
   void removeProduct(ProductClass product) {
@@ -44,7 +42,7 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void decrement( ProductClass product) {
+  void decrement(ProductClass product) {
     final index = cart.indexWhere((index) => index.index == product.index);
     if (product.quantity == 1) {
       cart.removeAt(index);
@@ -57,24 +55,18 @@ class CartProvider extends ChangeNotifier {
 }
 
 class FavoriteItemProvider extends ChangeNotifier {
-    final CartProvider cartProvider = CartProvider();
-    List<FavoriteClass> favoriteList = [];
+  final CartProvider cartProvider = CartProvider();
+  List<ProductClass> favoriteList = [];
 
-    void addProduct( product){
-      cartProvider.addProduct(product);
-      notifyListeners();
-    }
-
-  void addFavorite( FavoriteClass product) {
+  void addFavorite(ProductClass product) {
     favoriteList.add(product);
     notifyListeners();
   }
 
-  void removeFavorite( FavoriteClass product) {
+  void removeFavorite(ProductClass product) {
     favoriteList.remove(product);
     notifyListeners();
   }
-
 }
 
 class NotificationProvider extends ChangeNotifier {

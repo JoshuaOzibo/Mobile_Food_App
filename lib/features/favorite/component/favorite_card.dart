@@ -16,7 +16,7 @@ class FavoriteCard extends StatelessWidget {
   final String image;
   final String title;
   final String subTitle;
-  final int price;
+  final double price;
   final VoidCallback handleRemoveFavoriteItemFromList;
   final VoidCallback handleAddToCart;
 

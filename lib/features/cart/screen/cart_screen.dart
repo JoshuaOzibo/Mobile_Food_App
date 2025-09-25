@@ -14,6 +14,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartItems = Provider.of<CartProvider>(context, listen: true);
+    Provider.of<FavoriteItemProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -83,10 +84,11 @@ class CartScreen extends StatelessWidget {
                         height: 400,
                         child: Align(
                           alignment: Alignment.center,
-                          child: EmptyState(text: 'Cart')),
-                      )),
-                      
-                    
+                          child: EmptyState(text: 'Cart'),
+                        ),
+                      ),
+                    ),
+
                   ...cartItems.cart.map(
                     (item) => CartCard(
                       image: item.image,

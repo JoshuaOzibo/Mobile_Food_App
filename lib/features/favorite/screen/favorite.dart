@@ -21,6 +21,8 @@ class FavoriteScreen extends StatelessWidget {
       context,
       listen: false,
     );
+
+    final addFavoriteToCart =  Provider.of<CartProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -63,7 +65,7 @@ class FavoriteScreen extends StatelessWidget {
                       price: item.price,
                       handleRemoveFavoriteItemFromList: () =>
                           favoriteProvider.removeFavorite(item),
-                          handleAddToCart:() => favoriteProvider.addProduct(item),
+                          handleAddToCart:() => addFavoriteToCart.addProduct(item),
                     ),
                   ),
                 ],
