@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
-import 'package:mobile_food_app/core/text_helper.dart';
+import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/features/details/screen/food_details.dart';
 import 'package:mobile_food_app/features/favorite/component/favorite_class.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';

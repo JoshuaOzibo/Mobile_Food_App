@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
-import 'package:mobile_food_app/core/text_helper.dart';
+import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/features/details/component/size_button.dart';
 
 class FoodDetails extends StatelessWidget {
