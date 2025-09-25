@@ -144,7 +144,9 @@ class _IndexState extends State<Index> {
                             fontSize: 16,
                           ),
                         ),
-                        suffixIcon: Icon(uiIcons['search']),
+                        suffixIcon: GestureDetector(
+                          onTap: () => print('hello'),
+                          child: Icon(uiIcons['search'])),
                         suffixIconColor: NovaColors.textGray,
                         fillColor: NovaColors.searchBar,
                         filled: true,

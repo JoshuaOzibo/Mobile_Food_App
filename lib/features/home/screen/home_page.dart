@@ -15,7 +15,6 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-
 class _HomePageState extends State<HomePage> {
   int currentBottomIndex = 0;
 
@@ -47,15 +46,18 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       body: IndexedStack(index: currentBottomIndex, children: pages),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         currentIndex: currentBottomIndex,
-        onTap: ((item) => setState(() {
-          currentBottomIndex = item;
-        })),
+        onTap: (item) => setState(() => currentBottomIndex = item),
         selectedItemColor: NovaColors.primaryOrange,
         unselectedItemColor: NovaColors.textSecondary,
+        selectedIconTheme: const IconThemeData(size: 20),
+        unselectedIconTheme: const IconThemeData(size: 20),
 
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home, size: 20), label: '.'),
+          BottomNavigationBarItem(icon: Icon(Icons.home, size: 20), label: ''),
           BottomNavigationBarItem(
             icon: Stack(
               children: [
@@ -74,27 +76,27 @@ class _HomePageState extends State<HomePage> {
                   ),
               ],
             ),
-            label: '.',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Stack(
               children: [
                 Icon(uiIcons['favorite'], size: 20),
-                if(favoriteLength > 0)
-                Positioned(
-                  left: 10,
-                  child: Container(
-                    height: 9,
-                    width: 9,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 229, 15, 0),
-                      borderRadius: BorderRadius.circular(100),
+                if (favoriteLength > 0)
+                  Positioned(
+                    left: 10,
+                    child: Container(
+                      height: 9,
+                      width: 9,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 229, 15, 0),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
-            label: '.',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Stack(
@@ -113,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            label: '.',
+            label: '',
           ),
         ],
       ),

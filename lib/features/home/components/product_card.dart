@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 
@@ -86,7 +87,9 @@ class ProductCard extends StatelessWidget {
 
           const Spacer(),
 
-          Text(title),
+          Text(limitToTwoWords(title), style: TextStyle(
+            color: Colors.white
+          ),),
           const SizedBox(height: 5),
           Text(subTitle, style: TextStyle(color: NovaColors.textGray),),
 

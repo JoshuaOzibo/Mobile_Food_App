@@ -94,6 +94,7 @@ class FoodDetails extends StatelessWidget {
                                 color: Colors.white,
                                 decoration: TextDecoration.none,
                               ),
+                              softWrap: true, 
                             ),
                             Text(
                               meal['strCategory'],
