@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_food_app/features/favorite/component/favorite_class.dart';
+import 'package:mobile_food_app/models/favorite_class.dart';
+import 'package:mobile_food_app/models/product_class.dart';
 
 class CartProvider extends ChangeNotifier {
-  final List<Map<String, dynamic>> cart = [];
+  final List<ProductClass> cart = [];
   final double deliveryFee = 1.50;
 
-  void addProduct(Map<String, dynamic> product) {
-   final exists = cart.any((item) => item['index'] == product['index']);
+  void addProduct(ProductClass product) {
+   final exists = cart.any((item) => item.index == product.index);
    if(!exists){
     cart.add(product);
+    print(product);
     notifyListeners();
    }else{
     print('item exist');
@@ -16,16 +18,16 @@ class CartProvider extends ChangeNotifier {
    }
   }
 
-  void removeProduct(Map<String, dynamic> product) {
+  void removeProduct(ProductClass product) {
     cart.remove(product);
-    product['quantity'] = 1;
+    product.quantity = 1;
     notifyListeners();
   }
 
   double get subTotal {
     final subtotalPrice = cart.fold(
       0.0,
-      (prev, element) => prev + (element['price'] * element['quantity']),
+      (prev, element) => prev + (element.price * element.quantity),
     );
     return double.parse(subtotalPrice.toStringAsFixed(2));
   }
@@ -36,18 +38,18 @@ class CartProvider extends ChangeNotifier {
     return double.parse(total.toStringAsFixed(2));
   }
 
-  void increment(product) {
-    final index = cart.indexWhere((index) => index['index'] == product['index']);
-    cart[index]['quantity'] += 1;
+  void increment(ProductClass product) {
+    final index = cart.indexWhere((index) => index.index == product.index);
+    cart[index].quantity += 1;
     notifyListeners();
   }
 
-  void decrement(product) {
-    final index = cart.indexWhere((index) => index['index'] == product['index']);
-    if (product['quantity'] == 1) {
+  void decrement( ProductClass product) {
+    final index = cart.indexWhere((index) => index.index == product.index);
+    if (product.quantity == 1) {
       cart.removeAt(index);
     } else {
-      cart[index]['quantity'] -= 1;
+      cart[index].quantity -= 1;
     }
 
     notifyListeners();

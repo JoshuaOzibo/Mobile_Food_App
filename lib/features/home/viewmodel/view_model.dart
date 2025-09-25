@@ -7,12 +7,12 @@ class FetchHomeData {
         url: 'https://www.themealdb.com/api/json/v1/1/search.php?f=$letter',
       );
       final foodData = await api.getFood();
-      if(foodData){
+      if (foodData != null && foodData.isNotEmpty) {
         print('success fetching food data');
       }
       return foodData;
     } catch (e) {
-      print('error fetching food data $e');
+      print('error fetching food datayty $e');
       return null;
     }
   }

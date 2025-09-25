@@ -4,9 +4,10 @@ import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
 import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/features/details/screen/food_details.dart';
-import 'package:mobile_food_app/features/favorite/component/favorite_class.dart';
+import 'package:mobile_food_app/models/favorite_class.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
+import 'package:mobile_food_app/models/product_class.dart';
 import 'package:mobile_food_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_food_app/features/home/components/drop_down.dart';
@@ -42,6 +43,7 @@ class _IndexState extends State<Index> {
         meals!.addAll(data['meals']);
       });
       print(letterValue);
+      isMealLoading = false;
     } else {
       setState(() {
         isMealLoading = false;
@@ -197,7 +199,7 @@ class _IndexState extends State<Index> {
 
           const SizedBox(height: 40),
 
-          if (isMealLoading && !meals!.isEmpty)
+          if (isMealLoading == true)
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
@@ -205,7 +207,7 @@ class _IndexState extends State<Index> {
               ),
             ),
 
-          if (meals!.isEmpty && isMealLoading)
+          if (meals!.isEmpty && !isMealLoading)
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
@@ -237,16 +239,25 @@ class _IndexState extends State<Index> {
                         price: (5 + (meal['idMeal'].hashCode % 20)).toDouble(),
                         rating: (meal['idMeal'].hashCode % 5) + 1,
                         handleProductTap: () {
-                          providerHandler.addProduct({
-                            "index": meal['idMeal'],
-                            "image": meal['strMealThumb'],
-                            "title": limitToTwoWords(meal['strMeal']),
-                            "subTitle": meal['strCategory'],
-                            "price": (5 + (meal['idMeal'].hashCode % 20))
-                                .toDouble(),
-                            "rating": (meal['idMeal'].hashCode % 5) + 1,
-                            "quantity": 1,
-                          });
+                          providerHandler.addProduct(
+                            ProductClass(
+                              index: meal['idMeal'], 
+                              image: meal['strMealThumb'], 
+                              price: (5 + (meal['idMeal'].hashCode % 20)), 
+                              quantity: 1, 
+                              rating: (meal['idMeal'].hashCode % 5) + 1, 
+                              subTitle: meal['strCategory'], 
+                              title: limitToTwoWords(meal['strMeal']),
+                            ),
+                            // "index": meal['idMeal'],
+                            // "image": meal['strMealThumb'],
+                            // "title": limitToTwoWords(meal['strMeal']),
+                            // "subTitle": meal['strCategory'],
+                            // "price": (5 + (meal['idMeal'].hashCode % 20))
+                            //     .toDouble(),
+                            // "rating": (meal['idMeal'].hashCode % 5) + 1,
+                            // "quantity": 1,
+                          );
                         },
                         isClicked: isFavoriteClicked,
                         handleTapedLiked: () {
@@ -258,9 +269,7 @@ class _IndexState extends State<Index> {
                               title: limitToTwoWords(meal['strMeal']),
                             ),
                           );
-                          // setState(() {
-                          //   isFavoriteClicked = true;
-                          // });
+                       
                         },
 
                         handleTapSingleProduct: () => Navigator.push(

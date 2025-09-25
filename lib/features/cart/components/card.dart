@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
+import 'package:mobile_food_app/models/product_class.dart';
 import 'package:mobile_food_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class CartCard extends StatelessWidget {
   final String subTitle;
   final double price;
   final int quantity;
-  final Map<String, dynamic> singleItem;
+  final ProductClass singleItem;
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +56,17 @@ class CartCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                  title,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+                      title,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
 
-                Text('X ${quantity.toString()}', style: TextStyle(color: NovaColors.priceWhite),),
+                    Text(
+                      'X ${quantity.toString()}',
+                      style: TextStyle(color: NovaColors.priceWhite),
+                    ),
                   ],
                 ),
                 Text(
@@ -95,25 +102,28 @@ class CartCard extends StatelessWidget {
                             spacing: 15,
                             children: [
                               GestureDetector(
-                                onTap: () => productProvider.decrement(singleItem),
+                                onTap: () =>
+                                    productProvider.decrement(singleItem),
                                 child: Icon(uiIcons['remove'], size: 23),
                               ),
                               Text(
-                                '1',
+                                quantity.toString(),
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () => productProvider.increment(singleItem),
+                                onTap: () =>
+                                    productProvider.increment(singleItem),
                                 child: Icon(uiIcons['add'], size: 23),
                               ),
                             ],
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => productProvider.removeProduct(singleItem),
+                          onTap: () =>
+                              productProvider.removeProduct(singleItem),
                           child: Icon(
                             uiIcons['delete'],
                             color: NovaColors.chipsRed,

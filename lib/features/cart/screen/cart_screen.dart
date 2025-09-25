@@ -89,11 +89,11 @@ class CartScreen extends StatelessWidget {
                     
                   ...cartItems.cart.map(
                     (item) => CartCard(
-                      image: item['image'],
-                      title: item['title'],
-                      subTitle: item['subTitle'],
-                      price: item['price'],
-                      quantity: item['quantity'],
+                      image: item.image,
+                      title: item.title,
+                      subTitle: item.subTitle,
+                      price: item.price,
+                      quantity: item.quantity,
                       singleItem: item,
                     ),
                   ),
