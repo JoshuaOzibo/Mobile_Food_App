@@ -11,7 +11,8 @@ class ProductCard extends StatelessWidget {
     required this.price,
     required this.handleProductTap,
     required this.rating,
-    required this.handleTapedLiked,
+    required this.handleTapedLiked, 
+    required this.handleTapSingleProduct, 
     required this.isClicked,
   });
 
@@ -22,6 +23,7 @@ class ProductCard extends StatelessWidget {
   final GestureTapCallback handleProductTap;
   final double rating;
   final VoidCallback handleTapedLiked;
+  final VoidCallback handleTapSingleProduct;
   final bool isClicked;
 
   @override
@@ -43,39 +45,42 @@ class ProductCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadiusGeometry.circular(10),
-                  child: Image.network(
-                    image,
-                    width: double.infinity,
-                    height: double.infinity, 
-                    fit: BoxFit.cover,
-                    ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: NovaColors.badgeColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        topRight: Radius.circular(8)
-                      )
-                    ),
-                    child: Row(
-                      spacing: 2,
-                      children: [
-                        Icon(uiIcons['star'], size: 13, color: NovaColors.lightOrange,),
-                        Text(rating.toString(), style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
-                      ],
-                    ),
+            child: GestureDetector(
+              onTap: handleTapSingleProduct,
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadiusGeometry.circular(10),
+                    child: Image.network(
+                      image,
+                      width: double.infinity,
+                      height: double.infinity, 
+                      fit: BoxFit.cover,
+                      ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: NovaColors.badgeColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          topRight: Radius.circular(8)
+                        )
+                      ),
+                      child: Row(
+                        spacing: 2,
+                        children: [
+                          Icon(uiIcons['star'], size: 13, color: NovaColors.lightOrange,),
+                          Text(rating.toString(), style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+                        ],
+                      ),
+                    )
                   )
-                )
-              ],
+                ],
+              ),
             ),
           ),
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
+import 'package:mobile_food_app/features/details/screen/food_details.dart';
 import 'package:mobile_food_app/features/favorite/component/favorite_class.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
@@ -238,6 +239,8 @@ class _IndexState extends State<Index> {
                         //   isFavoriteClicked = true;
                         // });
                       },
+
+                      handleTapSingleProduct:() => Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetails())),
                     ),
                   ),
                 ],
