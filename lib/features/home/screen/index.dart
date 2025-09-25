@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
+import 'package:mobile_food_app/core/text_helper.dart';
 import 'package:mobile_food_app/features/details/screen/food_details.dart';
 import 'package:mobile_food_app/features/favorite/component/favorite_class.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
@@ -22,6 +23,7 @@ bool isTextSelected = true;
 bool isFavoriteClicked = false;
 String selectedText = 'Pasta';
 String letterValue = 'a';
+bool isMealLoading = true;
 final homeFoodFetcher = FetchHomeData();
 List<dynamic>? meals = [];
 
@@ -36,11 +38,13 @@ class _IndexState extends State<Index> {
     final data = await homeFoodFetcher.fetchData(letter: letterValue);
     if (data != null && data['meals'] != null) {
       setState(() {
+        isMealLoading = true;
         meals!.addAll(data['meals']);
       });
       print(letterValue);
     } else {
       setState(() {
+        isMealLoading = false;
         meals = [];
       });
     }
@@ -193,60 +197,84 @@ class _IndexState extends State<Index> {
 
           const SizedBox(height: 40),
 
-          SizedBox(
-            height: 390,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: GridView(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.68,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 20,
-                ),
-
-                children: [
-                  ...meals!.map(
-                    (meal) => ProductCard(
-                      image: meal['strMealThumb'],
-                      title: meal['strMeal'],
-                      subTitle: meal['strCategory'],
-                      price: (5 + (meal['idMeal'].hashCode % 20)).toDouble(),
-                      rating: (meal['idMeal'].hashCode % 5) + 1,
-                      handleProductTap: () {
-                        providerHandler.addProduct({
-                          "index": meal['idMeal'],
-                          "image": meal['strMealThumb'],
-                          "title": meal['strMeal'],
-                          "subTitle": meal['strCategory'],
-                          "price": (5 + (meal['idMeal'].hashCode % 20))
-                              .toDouble(),
-                          "rating": (meal['idMeal'].hashCode % 5) + 1,
-                          "quantity": 1,
-                        });
-                      },
-                      isClicked: isFavoriteClicked,
-                      handleTapedLiked: () {
-                        favoriteProviderHandler.addFavorite(
-                          FavoriteClass(
-                            image: meal['strMealThumb'],
-                            price: (5 + (meal['idMeal'].hashCode % 20)),
-                            subTitle: meal['strCategory'],
-                            title: meal['strMeal'],
-                          ),
-                        );
-                        // setState(() {
-                        //   isFavoriteClicked = true;
-                        // });
-                      },
-
-                      handleTapSingleProduct:() => Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetails())),
-                    ),
-                  ),
-                ],
+          if (isMealLoading && !meals!.isEmpty)
+            Center(
+              child: Container(
+                margin: EdgeInsets.only(top: 150),
+                child: Text('Loading....'),
               ),
             ),
-          ),
+
+          if (meals!.isEmpty && isMealLoading)
+            Center(
+              child: Container(
+                margin: EdgeInsets.only(top: 150),
+                child: Text(
+                  'Error fetching food, check your internet connection',
+                ),
+              ),
+            ),
+
+          if (meals!.isNotEmpty)
+            SizedBox(
+              height: 390,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.68,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 20,
+                  ),
+
+                  children: [
+                    ...meals!.map(
+                      (meal) => ProductCard(
+                        image: meal['strMealThumb'],
+                        title: meal['strMeal'],
+                        subTitle: meal['strCategory'],
+                        price: (5 + (meal['idMeal'].hashCode % 20)).toDouble(),
+                        rating: (meal['idMeal'].hashCode % 5) + 1,
+                        handleProductTap: () {
+                          providerHandler.addProduct({
+                            "index": meal['idMeal'],
+                            "image": meal['strMealThumb'],
+                            "title": limitToTwoWords(meal['strMeal']),
+                            "subTitle": meal['strCategory'],
+                            "price": (5 + (meal['idMeal'].hashCode % 20))
+                                .toDouble(),
+                            "rating": (meal['idMeal'].hashCode % 5) + 1,
+                            "quantity": 1,
+                          });
+                        },
+                        isClicked: isFavoriteClicked,
+                        handleTapedLiked: () {
+                          favoriteProviderHandler.addFavorite(
+                            FavoriteClass(
+                              image: meal['strMealThumb'],
+                              price: (5 + (meal['idMeal'].hashCode % 20)),
+                              subTitle: meal['strCategory'],
+                              title: limitToTwoWords(meal['strMeal']),
+                            ),
+                          );
+                          // setState(() {
+                          //   isFavoriteClicked = true;
+                          // });
+                        },
+
+                        handleTapSingleProduct: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FoodDetails(meal: meal),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
         ],
       ),
     );
