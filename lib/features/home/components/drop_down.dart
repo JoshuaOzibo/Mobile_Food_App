@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_food_app/core/nova_colors.dart';
 
 class Dropdown extends StatefulWidget {
   const Dropdown({super.key, required this.handleSelectLetter});
@@ -20,11 +21,14 @@ class _DropdownState extends State<Dropdown> {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       menuMaxHeight: 200,
-      underline: null,
+      underline: const SizedBox(),
       elevation: 0,
       borderRadius: BorderRadius.circular(12),
       hint: const Text("A–Z"),
+      iconSize: 30,
+      style: const TextStyle(color: NovaColors.textSecondary, fontSize: 16),
       value: selectedValue,
+      isExpanded: true,
       items: alphabetItems.map((letter) {
         return DropdownMenuItem(
           value: letter,

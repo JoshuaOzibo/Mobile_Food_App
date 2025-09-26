@@ -156,9 +156,15 @@ class _IndexState extends State<Index> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: NovaColors.searchBar,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: SizedBox(
                     height: 60,
-                    width: 100,
+                    width: 90,
                     child: Dropdown(
                       handleSelectLetter: (item) {
                         setState(() {
@@ -167,6 +173,7 @@ class _IndexState extends State<Index> {
                         _fetchMeals();
                       },
                     ),
+                  ),
                   ),
                 ],
               ),
