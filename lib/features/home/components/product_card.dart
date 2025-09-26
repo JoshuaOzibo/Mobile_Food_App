@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/core/icons.dart';
@@ -12,8 +13,8 @@ class ProductCard extends StatelessWidget {
     required this.price,
     required this.handleProductTap,
     required this.rating,
-    required this.handleTapedLiked, 
-    required this.handleTapSingleProduct, 
+    required this.handleTapedLiked,
+    required this.handleTapSingleProduct,
     required this.isClicked,
   });
 
@@ -43,21 +44,25 @@ class ProductCard extends StatelessWidget {
           Container(
             height: 135,
             width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             child: GestureDetector(
               onTap: handleTapSingleProduct,
               child: Stack(
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadiusGeometry.circular(10),
-                    child: Image.network(
-                      image,
+                    child: CachedNetworkImage(
                       width: double.infinity,
-                      height: double.infinity, 
+                      height: double.infinity,
                       fit: BoxFit.cover,
-                      ),
+                      imageUrl: image,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                                value: downloadProgress.progress,
+                              ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
                   Positioned(
                     top: 0,
@@ -68,18 +73,28 @@ class ProductCard extends StatelessWidget {
                         color: NovaColors.badgeColor,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(15),
-                          topRight: Radius.circular(8)
-                        )
+                          topRight: Radius.circular(8),
+                        ),
                       ),
                       child: Row(
                         spacing: 2,
                         children: [
-                          Icon(uiIcons['star'], size: 13, color: NovaColors.lightOrange,),
-                          Text(rating.toString(), style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),),
+                          Icon(
+                            uiIcons['star'],
+                            size: 13,
+                            color: NovaColors.lightOrange,
+                          ),
+                          Text(
+                            rating.toString(),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
-                    )
-                  )
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -87,11 +102,9 @@ class ProductCard extends StatelessWidget {
 
           const Spacer(),
 
-          Text(limitToTwoWords(title), style: TextStyle(
-            color: Colors.white
-          ),),
+          Text(limitToTwoWords(title), style: TextStyle(color: Colors.white)),
           const SizedBox(height: 5),
-          Text(subTitle, style: TextStyle(color: NovaColors.textGray),),
+          Text(subTitle, style: TextStyle(color: NovaColors.textGray)),
 
           const SizedBox(height: 10),
 
@@ -102,24 +115,33 @@ class ProductCard extends StatelessWidget {
               Row(
                 spacing: 10,
                 children: [
-                  isClicked ? 
-                  Icon(uiIcons['favorite'], size: 25, color: NovaColors.lightOrange,) : 
-                  GestureDetector(
-                    onTap: handleTapedLiked,
-                    child: Icon(uiIcons['favorite_border'], size: 25, color: NovaColors.lightOrange,)),
+                  isClicked
+                      ? Icon(
+                          uiIcons['favorite'],
+                          size: 25,
+                          color: NovaColors.lightOrange,
+                        )
+                      : GestureDetector(
+                          onTap: handleTapedLiked,
+                          child: Icon(
+                            uiIcons['favorite_border'],
+                            size: 25,
+                            color: NovaColors.lightOrange,
+                          ),
+                        ),
                   Container(
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: NovaColors.primaryOrange,
-                ),
-                child: GestureDetector(
-                  onTap: handleProductTap,
-                  child: Icon(uiIcons['add'], size: 20),
-                ),
-              ),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: NovaColors.primaryOrange,
+                    ),
+                    child: GestureDetector(
+                      onTap: handleProductTap,
+                      child: Icon(uiIcons['add'], size: 20),
+                    ),
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ],
