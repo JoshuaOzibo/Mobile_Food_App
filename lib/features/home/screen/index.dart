@@ -25,6 +25,7 @@ String selectedText = 'Pasta';
 String letterValue = 'a';
 bool isMealLoading = true;
 final homeFoodFetcher = FetchHomeData();
+final fetchFoodByName = FilterByFoodName();
 List<dynamic>? meals = [];
 
 class _IndexState extends State<Index> {
@@ -32,22 +33,60 @@ class _IndexState extends State<Index> {
   void initState() {
     super.initState();
     _fetchMeals();
+    _fetchFood();
   }
 
   Future<void> _fetchMeals() async {
-    final data = await homeFoodFetcher.fetchData(letter: letterValue);
-    if (data != null && data['meals'] != null) {
-      setState(() {
-        isMealLoading = true;
-        meals!.addAll(data['meals']);
-      });
-      print(letterValue);
-      isMealLoading = false;
-    } else {
-      setState(() {
+    setState(() {
+      isMealLoading =true;
+    });
+    try {
+      final data = await homeFoodFetcher.fetchData(letter: letterValue);
+      if (data != null && data['meals'] != null) {
+        setState(() {
+          meals!.addAll(data['meals']);
+          isMealLoading = false;
+        });
+        print(letterValue);
         isMealLoading = false;
+      }
+    } catch (e) {
+      setState(() {
         meals = [];
+        isMealLoading = false;
       });
+      print(e);
+    }
+  }
+
+  Future<void> _fetchFood() async {
+    setState(() {
+      isMealLoading = true;
+    });
+    try {
+      final fetchFood = await fetchFoodByName.fetchFoodByName(name: 'rice');
+      if (fetchFood != null && fetchFood['meals'] != null) {
+        setState(() {
+          meals!.addAll(fetchFood['meals']);
+          isMealLoading = false;
+        });
+        print(fetchFood);
+        isMealLoading = false;
+      } else {
+        setState(() {
+          isMealLoading = false;
+          meals = [];
+        });
+        print(fetchFood);
+        print(meals);
+        print('Hello meals is null');
+      }
+    } catch (e) {
+      setState(() {
+        meals = [];
+        isMealLoading = false;
+      });
+      print('$e');
     }
   }
 
@@ -146,7 +185,8 @@ class _IndexState extends State<Index> {
                         ),
                         suffixIcon: GestureDetector(
                           onTap: () => print('hello'),
-                          child: Icon(uiIcons['search'])),
+                          child: Icon(uiIcons['search']),
+                        ),
                         suffixIconColor: NovaColors.textGray,
                         fillColor: NovaColors.searchBar,
                         filled: true,
@@ -163,17 +203,17 @@ class _IndexState extends State<Index> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: SizedBox(
-                    height: 60,
-                    width: 90,
-                    child: Dropdown(
-                      handleSelectLetter: (item) {
-                        setState(() {
-                          letterValue = item;
-                        });
-                        _fetchMeals();
-                      },
+                      height: 60,
+                      width: 90,
+                      child: Dropdown(
+                        handleSelectLetter: (item) {
+                          setState(() {
+                            letterValue = item;
+                          });
+                          _fetchMeals();
+                        },
+                      ),
                     ),
-                  ),
                   ),
                 ],
               ),
@@ -207,7 +247,7 @@ class _IndexState extends State<Index> {
 
           const SizedBox(height: 40),
 
-          if (isMealLoading == true)
+          if (isMealLoading)
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
