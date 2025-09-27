@@ -6,6 +6,7 @@ import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/features/details/screen/food_details.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
+import 'package:mobile_food_app/features/home/components/search_input.dart';
 import 'package:mobile_food_app/models/product_class.dart';
 import 'package:mobile_food_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,6 @@ class _IndexState extends State<Index> {
   void initState() {
     super.initState();
     _fetchMeals();
-    // _fetchFoodCategory('pasta');
   }
 
   Future<void> _fetchMeals() async {
@@ -178,29 +178,7 @@ class _IndexState extends State<Index> {
                 spacing: 10,
                 children: [
                   Expanded(
-                    child: TextField(
-                      autocorrect: true,
-                      autofillHints: Characters(''),
-                      decoration: InputDecoration(
-                        hint: const Text(
-                          'search for your food',
-                          style: TextStyle(
-                            color: NovaColors.textGray,
-                            fontSize: 16,
-                          ),
-                        ),
-                        suffixIcon: GestureDetector(
-                          onTap: () => print('hello'),
-                          child: Icon(uiIcons['search']),
-                        ),
-                        suffixIconColor: NovaColors.textGray,
-                        fillColor: NovaColors.searchBar,
-                        filled: true,
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
+                    child: SearchInput(onChange: (value) => {print(value)}),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
@@ -210,7 +188,7 @@ class _IndexState extends State<Index> {
                     ),
                     child: SizedBox(
                       height: 60,
-                      width: 90,
+                      width: 80,
                       child: Dropdown(
                         handleSelectLetter: (item) {
                           setState(() {
