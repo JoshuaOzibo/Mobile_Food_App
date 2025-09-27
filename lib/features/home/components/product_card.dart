@@ -59,7 +59,8 @@ class ProductCard extends StatelessWidget {
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) =>
                               CircularProgressIndicator(
-                                value: downloadProgress.progress,
+                                strokeWidth: 5,
+                                backgroundColor: NovaColors.lightOrange,
                               ),
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),

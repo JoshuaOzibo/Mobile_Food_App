@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_food_app/core/components/snackbar.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
@@ -27,7 +28,6 @@ String letterValue = 'a';
 String errorMessage = '';
 bool isMealLoading = true;
 final homeFoodFetcher = FetchHomeData();
-final catchError = FetchHomeData().catchError;
 List<dynamic>? meals = [];
 
 class _IndexState extends State<Index> {
@@ -55,6 +55,11 @@ class _IndexState extends State<Index> {
         errorMessage = 'food with letter $letterValue is not avaliable';
         setState(() {
           isMealLoading = false;
+          CustomSnackbar.show(
+            context,
+            'No food found for letter $letterValue',
+            NovaColors.primaryOrange,
+          );
         });
       }
       if (fetchByLetter == null) {
@@ -92,13 +97,6 @@ class _IndexState extends State<Index> {
           errorMessage = 'food with name $item is not avaliable';
           setState(() {
             isMealLoading = false;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                content: Text(catchError),
-                backgroundColor: NovaColors.primaryOrange,
-              ),
-            );
           });
         }
         if (fetchFood == null) {
@@ -138,12 +136,10 @@ class _IndexState extends State<Index> {
         errorMessage = 'food with category $category is not avaliable';
         setState(() {
           isMealLoading = false;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-              content: Text(catchError),
-              backgroundColor: NovaColors.primaryOrange,
-            ),
+          CustomSnackbar.show(
+            context,
+            'No food category found for $category',
+            NovaColors.primaryOrange,
           );
         });
       }
@@ -162,10 +158,15 @@ class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     final providerHandler = Provider.of<CartProvider>(context, listen: false);
+    final cartChecker = Provider.of<CartProvider>(context, listen: true).cart;
     final favoriteProviderHandler = Provider.of<FavoriteItemProvider>(
       context,
       listen: false,
     );
+    final favChecker = Provider.of<FavoriteItemProvider>(
+      context,
+      listen: true,
+    ).favoriteList;
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -336,31 +337,63 @@ class _IndexState extends State<Index> {
                         price: (5 + (meal['idMeal'].hashCode % 20)).toDouble(),
                         rating: (meal['idMeal'].hashCode % 5) + 1,
                         handleProductTap: () {
-                          providerHandler.addProduct(
-                            ProductClass(
-                              index: meal['idMeal'],
-                              image: meal['strMealThumb'],
-                              price: (5 + (meal['idMeal'].hashCode % 20)),
-                              quantity: 1,
-                              rating: (meal['idMeal'].hashCode % 5) + 1,
-                              subTitle: meal['strCategory'],
-                              title: limitToTwoWords(meal['strMeal']),
-                            ),
+                          final exist = cartChecker.any(
+                            (item) => item.index == meal['idMeal'],
                           );
+                          if (exist) {
+                            CustomSnackbar.show(
+                              context,
+                              '${meal['strMeal']} Already in Cart',
+                              const Color.fromARGB(255, 223, 15, 0),
+                            );
+                          } else {
+                            providerHandler.addProduct(
+                              ProductClass(
+                                index: meal['idMeal'],
+                                image: meal['strMealThumb'],
+                                price: (5 + (meal['idMeal'].hashCode % 20)),
+                                quantity: 1,
+                                rating: (meal['idMeal'].hashCode % 5) + 1,
+                                subTitle: meal['strCategory'],
+                                title: limitToTwoWords(meal['strMeal']),
+                              ),
+                            );
+                            CustomSnackbar.show(
+                              context,
+                              '${meal['strMeal']} Added to Cart',
+                              NovaColors.primaryOrange,
+                            );
+                          }
                         },
                         isClicked: isFavoriteClicked,
                         handleTapedLiked: () {
-                          favoriteProviderHandler.addFavorite(
-                            ProductClass(
-                              image: meal['strMealThumb'],
-                              price: (5 + (meal['idMeal'].hashCode % 20)),
-                              subTitle: meal['strCategory'],
-                              title: limitToTwoWords(meal['strMeal']),
-                              index: meal['idMeal'],
-                              quantity: 1,
-                              rating: (meal['idMeal'].hashCode % 5) + 1,
-                            ),
+                          final exist = favChecker.any(
+                            (item) => item.index == meal['idMeal'],
                           );
+                          if (exist) {
+                            CustomSnackbar.show(
+                              context,
+                              '${meal['strMeal']} Already in Favorite list',
+                              const Color.fromARGB(255, 223, 15, 0),
+                            );
+                          } else {
+                            favoriteProviderHandler.addFavorite(
+                              ProductClass(
+                                image: meal['strMealThumb'],
+                                price: (5 + (meal['idMeal'].hashCode % 20)),
+                                subTitle: meal['strCategory'],
+                                title: limitToTwoWords(meal['strMeal']),
+                                index: meal['idMeal'],
+                                quantity: 1,
+                                rating: (meal['idMeal'].hashCode % 5) + 1,
+                              ),
+                            );
+                            CustomSnackbar.show(
+                              context,
+                              '${meal['strMeal']} Added to Favorite',
+                              NovaColors.primaryOrange,
+                            );
+                          }
                         },
 
                         handleTapSingleProduct: () => Navigator.push(
