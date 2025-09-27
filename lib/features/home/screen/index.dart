@@ -33,12 +33,12 @@ class _IndexState extends State<Index> {
   void initState() {
     super.initState();
     _fetchMeals();
-    _fetchFood();
+    // _fetchFoodCategory('pasta');
   }
 
   Future<void> _fetchMeals() async {
     setState(() {
-      isMealLoading =true;
+      isMealLoading = true;
     });
     try {
       final data = await homeFoodFetcher.fetchData(letter: letterValue);
@@ -59,12 +59,18 @@ class _IndexState extends State<Index> {
     }
   }
 
-  Future<void> _fetchFood() async {
+  Future<void> _fetchFoodCategory(item) async {
     setState(() {
       isMealLoading = true;
     });
+    setState(() {
+      meals = [];
+      selectedText = item;
+    });
     try {
-      final fetchFood = await fetchFoodByName.fetchFoodByName(name: 'rice');
+      final fetchFood = await fetchFoodByName.fetchFoodByName(
+        name: selectedText,
+      );
       if (fetchFood != null && fetchFood['meals'] != null) {
         setState(() {
           meals!.addAll(fetchFood['meals']);
@@ -208,6 +214,7 @@ class _IndexState extends State<Index> {
                       child: Dropdown(
                         handleSelectLetter: (item) {
                           setState(() {
+                            meals = [];
                             letterValue = item;
                           });
                           _fetchMeals();
@@ -235,9 +242,7 @@ class _IndexState extends State<Index> {
                       isSelected: selectedText == item
                           ? isTextSelected
                           : !isTextSelected,
-                      onTapFilter: () => setState(() {
-                        selectedText = item;
-                      }),
+                      onTapFilter: () => _fetchFoodCategory(item),
                     ),
                   ),
                 ],

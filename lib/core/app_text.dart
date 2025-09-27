@@ -8,10 +8,18 @@ class AppText {
 
 const List<String> filterText = [
   "Pasta",
-  "Ramen",
-  "Biryanis",
+  "Migas",
+  "Arrabiata",
+  "Burek",
   "Tandoori",
-  "Smoothie",
+  "Chicken Handi",
+  "Beef Wellington",
+  "French Omelette",
+  "Baingan Bharta",
+  "Tandoori Chicken",
+  "Lamb Pilaf",
+  "Potato Salad",
+  "Blini Pancakes",
 ];
 
 final List<Map<String, dynamic>> productList = [
