@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
@@ -40,7 +41,18 @@ class FavoriteCard extends StatelessWidget {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
             child: ClipRRect(
               borderRadius: BorderRadiusGeometry.circular(100),
-              child: Image.network(fit: BoxFit.cover, image),
+              child: CachedNetworkImage(
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+                imageUrl: image,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                      strokeWidth: 5,
+                      backgroundColor: NovaColors.lightOrange,
+                    ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
             ),
           ),
           Expanded(

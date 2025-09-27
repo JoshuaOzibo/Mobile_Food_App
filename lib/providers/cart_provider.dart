@@ -49,7 +49,6 @@ class CartProvider extends ChangeNotifier {
     } else {
       cart[index].quantity -= 1;
     }
-
     notifyListeners();
   }
 }

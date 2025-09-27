@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
           appBarTheme: AppBarTheme(
             backgroundColor: NovaColors.backgroundDark,
+            scrolledUnderElevation: 0
             ),
         ),
         home: HomePage(),

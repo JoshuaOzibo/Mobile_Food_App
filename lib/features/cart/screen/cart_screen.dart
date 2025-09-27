@@ -136,7 +136,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '\$${cartItems.deliveryFee.toString()}',
+                      '\$${cartItems.cart.isEmpty ? 0.0 : cartItems.deliveryFee.toString()}',
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w400,

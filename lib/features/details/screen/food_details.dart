@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
@@ -21,11 +22,19 @@ class FoodDetails extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(20),
-                  child: Image.network(
-                    meal['strMealThumb'],
-                    height: 550,
-                    fit: BoxFit.fitHeight,
-                  ),
+                  child: CachedNetworkImage(
+                      width: double.infinity,
+                      height: 550,
+                      fit: BoxFit.fitHeight,
+                      imageUrl: meal['strMealThumb'],
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                                strokeWidth: 5,
+                                backgroundColor: NovaColors.lightOrange,
+                              ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                 ),
                 Positioned(
                   child: Container(
