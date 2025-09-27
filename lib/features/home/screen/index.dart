@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
@@ -24,9 +26,9 @@ bool isTextSelected = true;
 bool isFavoriteClicked = false;
 String selectedText = 'Pasta';
 String letterValue = 'a';
+String errorMessage = '';
 bool isMealLoading = true;
 final homeFoodFetcher = FetchHomeData();
-final fetchFoodByName = FilterByFoodName();
 List<dynamic>? meals = [];
 
 class _IndexState extends State<Index> {
@@ -41,15 +43,27 @@ class _IndexState extends State<Index> {
       isMealLoading = true;
     });
     try {
-      final data = await homeFoodFetcher.fetchData(letter: letterValue);
-      if (data != null && data['meals'] != null) {
+      final fetchByLetter = await homeFoodFetcher.fetchData(
+        letter: letterValue,
+      );
+      if (fetchByLetter != null && fetchByLetter['meals'] != null) {
         setState(() {
-          meals!.addAll(data['meals']);
+          meals!.addAll(fetchByLetter['meals']);
           isMealLoading = false;
         });
-        print(letterValue);
-        isMealLoading = false;
       }
+      if (fetchByLetter?['meals'] == null) {
+        errorMessage = 'food with letter $letterValue is not avaliable';
+        setState(() {
+          isMealLoading = false;
+        });
+      }
+      if (fetchByLetter == null) {
+        errorMessage = 'error fetching food check your internet connection';
+      }
+      setState(() {
+        isMealLoading = false;
+      });
     } catch (e) {
       setState(() {
         meals = [];
@@ -62,13 +76,11 @@ class _IndexState extends State<Index> {
   Future<void> _fetchFoodCategory(item) async {
     setState(() {
       isMealLoading = true;
-    });
-    setState(() {
       meals = [];
       selectedText = item;
     });
     try {
-      final fetchFood = await fetchFoodByName.fetchFoodByName(
+      final fetchFood = await homeFoodFetcher.fetchFoodByName(
         name: selectedText,
       );
       if (fetchFood != null && fetchFood['meals'] != null) {
@@ -76,16 +88,21 @@ class _IndexState extends State<Index> {
           meals!.addAll(fetchFood['meals']);
           isMealLoading = false;
         });
-        print(fetchFood);
-        isMealLoading = false;
+
+        if (fetchFood['meals'] == null) {
+          errorMessage = 'food with name $item is not avaliable';
+          setState(() {
+            isMealLoading = false;
+          });
+        }
+        if (fetchFood == null) {
+          errorMessage = 'error fetching food check your internet connection';
+        }
       } else {
         setState(() {
           isMealLoading = false;
           meals = [];
         });
-        print(fetchFood);
-        print(meals);
-        print('Hello meals is null');
       }
     } catch (e) {
       setState(() {
@@ -93,6 +110,39 @@ class _IndexState extends State<Index> {
         isMealLoading = false;
       });
       print('$e');
+    }
+  }
+
+  Future<void> _handleSaerchByCategoty(category) async {
+    setState(() {
+      isMealLoading = true;
+      meals = [];
+    });
+    try {
+      final searchCategory = await homeFoodFetcher.searchFoodByCategory(
+        category: category,
+      );
+      if (searchCategory != null && searchCategory['meals'] != null) {
+        setState(() {
+          meals!.addAll(searchCategory['meals']);
+          isMealLoading = false;
+        });
+      }
+      if (searchCategory?['meals'] == null) {
+        errorMessage = 'food with category $category is not avaliable';
+        setState(() {
+          isMealLoading = false;
+        });
+      }
+      if (searchCategory == null) {
+        errorMessage = 'error fetching food check your internet connection';
+      }
+    } catch (e) {
+      setState(() {
+        isMealLoading = false;
+        meals = [];
+      });
+      print(e);
     }
   }
 
@@ -178,7 +228,9 @@ class _IndexState extends State<Index> {
                 spacing: 10,
                 children: [
                   Expanded(
-                    child: SearchInput(onChange: (value) => {print(value)}),
+                    child: SearchInput(
+                      onChange: (value) => _handleSaerchByCategoty(value),
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
@@ -234,17 +286,18 @@ class _IndexState extends State<Index> {
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
-                child: Text('Loading....'),
+                child: CircularProgressIndicator(
+                  color: NovaColors.lightOrange,
+                  strokeWidth: 3,
+                ),
               ),
             ),
 
-          if (meals!.isEmpty && !isMealLoading)
+          if (!isMealLoading && meals!.isEmpty)
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
-                child: Text(
-                  'Error fetching food, check your internet connection',
-                ),
+                child: Text(errorMessage),
               ),
             ),
 
