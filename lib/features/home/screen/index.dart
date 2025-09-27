@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
@@ -29,6 +27,7 @@ String letterValue = 'a';
 String errorMessage = '';
 bool isMealLoading = true;
 final homeFoodFetcher = FetchHomeData();
+final catchError = FetchHomeData().catchError;
 List<dynamic>? meals = [];
 
 class _IndexState extends State<Index> {
@@ -93,6 +92,13 @@ class _IndexState extends State<Index> {
           errorMessage = 'food with name $item is not avaliable';
           setState(() {
             isMealLoading = false;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                content: Text(catchError),
+                backgroundColor: NovaColors.primaryOrange,
+              ),
+            );
           });
         }
         if (fetchFood == null) {
@@ -132,6 +138,13 @@ class _IndexState extends State<Index> {
         errorMessage = 'food with category $category is not avaliable';
         setState(() {
           isMealLoading = false;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              content: Text(catchError),
+              backgroundColor: NovaColors.primaryOrange,
+            ),
+          );
         });
       }
       if (searchCategory == null) {

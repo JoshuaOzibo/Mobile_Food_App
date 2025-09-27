@@ -1,10 +1,7 @@
 import 'package:mobile_food_app/networks/api_request.dart';
 
 class FetchHomeData {
-
   String catchError = '';
-
-
 
   Future<Map<String, dynamic>?> fetchData({required String letter}) async {
     try {
@@ -17,8 +14,8 @@ class FetchHomeData {
           foodData['meals'] != null) {
         print('success fetching food data');
       }
-      if(foodData['meals'] == null){
-        catchError = 'No food found for $letter';
+      if (foodData['meals'] == null) {
+        catchError = 'No food found for letter $letter';
       }
       return foodData;
     } catch (e) {
@@ -38,7 +35,7 @@ class FetchHomeData {
           foodData['meals'] != null) {
         print('success fetching food data by name');
       }
-      
+
       return foodData;
     } catch (e) {
       print('error fetching food by name $e');
@@ -54,11 +51,12 @@ class FetchHomeData {
         url: 'https://www.themealdb.com/api/json/v1/1/search.php?s=$category',
       );
       final searchFood = await api.getFood();
-      if ( searchFood != null) {
+      if (searchFood != null) {
         print('food search successfully');
       }
-      if(searchFood['meals'] == null){
-        catchError = 'No food found for $category';
+      if (searchFood['meals'] == null) {
+        catchError = 'No food found for categoty $category';
+        
       }
       return searchFood;
     } catch (e) {
