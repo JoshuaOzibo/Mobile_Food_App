@@ -210,7 +210,17 @@ class _IndexState extends State<Index> {
           ],
         ),
 
-        actions: [Icon(uiIcons['avater'], size: 50)],
+        actions: [
+          Container(
+            clipBehavior: Clip.none,
+            width: 50,
+            height: 50,
+            child: ClipRRect(
+              borderRadius: BorderRadiusGeometry.circular(100),
+              child: Image.asset('assets/images/estin.webp', fit: BoxFit.cover),
+            ),
+          ),
+        ],
       ),
 
       body: Column(
