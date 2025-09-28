@@ -22,8 +22,6 @@ Users can browse products, add/remove items from the cart, manage favorites, and
 
 or a quick preview:
 
-![App Demo](assets/gif/screen-20250927-180730.gif)
-
 <p align="center">
     <img src="assets/gif/screen-20250927-180730.gif" alt="Home Screen" width="200"/>
 </p>
