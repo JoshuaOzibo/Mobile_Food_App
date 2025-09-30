@@ -8,6 +8,9 @@ class ProductClass {
   final String? youtube;
   final List<String> ingredients;
   final List<String> measures;
+  final int? quantity;
+  final double? rating;
+  final double? price;
 
   ProductClass({
     required this.id,
@@ -19,6 +22,9 @@ class ProductClass {
     this.youtube,
     required this.ingredients,
     required this.measures,
+    this.quantity,
+    this.rating,
+    this.price,
   });
 
   factory ProductClass.fromJson(Map<String, dynamic> json) {

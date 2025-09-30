@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/features/cart/screen/cart_screen.dart';
+import 'package:mobile_food_app/features/cart/viewmodel/cart_viewmodel.dart';
 import 'package:mobile_food_app/features/favorite/screen/favorite.dart';
 import 'package:mobile_food_app/features/home/screen/index.dart';
 import 'package:mobile_food_app/features/notification/screen/notification_screen.dart';
@@ -20,13 +21,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final cm = context.watch<CartViewmodel>();
     final pages = [
       Index(),
-      // CartScreen(
-      //   onNavigateHome: () => setState(() {
-      //     currentBottomIndex = 0;
-      //   }),
-      // ),
+      CartScreen(
+        onNavigateHome: () => setState(() {
+          currentBottomIndex = 0;
+        }),
+      ),
       // FavoriteScreen(
       //   onNavigateHome: () => setState(() {
       //     currentBottomIndex = 0;
@@ -62,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             icon: Stack(
               children: [
                 Icon(uiIcons['shopping_bag'], size: 20),
-                // if (cartLength > 0)
+                if (cm.getCartItems.isNotEmpty)
                   Positioned(
                     left: 10,
                     child: Container(

@@ -4,10 +4,12 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
 import 'package:mobile_food_app/core/components/text_helper.dart';
+import 'package:mobile_food_app/features/cart/viewmodel/cart_viewmodel.dart';
 import 'package:mobile_food_app/features/details/screen/food_details.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
 import 'package:mobile_food_app/features/home/components/search_input.dart';
+import 'package:mobile_food_app/models/product_class.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_food_app/features/home/components/drop_down.dart';
 import 'package:mobile_food_app/features/home/viewmodel/view_model.dart';
@@ -40,6 +42,7 @@ class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<HomeViewModel>();
+    final cm = context.watch<CartViewmodel>();
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -170,13 +173,13 @@ class _IndexState extends State<Index> {
                     (item) => FilterButton(
                       text: item,
                       isSelected: selectedText == item
-                          ? isTextSelected 
+                          ? isTextSelected
                           : !isTextSelected,
                       onTapFilter: () => {
-                        selectedText =item,
+                        selectedText = item,
                         setState(() {
                           vm.getProducts.clear();
-                        vm.fetchByName(item);
+                          vm.fetchByName(item);
                         }),
                       },
                     ),
@@ -199,7 +202,9 @@ class _IndexState extends State<Index> {
               ),
             ),
 
-          if (vm.getProducts.isEmpty && !vm.isLoading && vm.errorMessage != null)
+          if (vm.getProducts.isEmpty &&
+              !vm.isLoading &&
+              vm.errorMessage != null)
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
@@ -229,7 +234,7 @@ class _IndexState extends State<Index> {
                         price: (5 + (meal.id.hashCode % 20)).toDouble(),
                         rating: (meal.id.hashCode % 5) + 1,
                         handleProductTap: () {
-                          final exist = vm.getProducts.any(
+                          final exist = cm.getCartItems.any(
                             (item) => item.id == meal.id,
                           );
                           if (exist) {
@@ -239,17 +244,21 @@ class _IndexState extends State<Index> {
                               const Color.fromARGB(255, 223, 15, 0),
                             );
                           } else {
-                            // providerHandler.addProduct(
-                            //   ProductClass(
-                            //     index: meal['idMeal'],
-                            //     image: meal['strMealThumb'],
-                            //     price: (5 + (meal['idMeal'].hashCode % 20)),
-                            //     quantity: 1,
-                            //     rating: (meal['idMeal'].hashCode % 5) + 1,
-                            //     subTitle: meal['strCategory'],
-                            //     title: limitToTwoWords(meal['strMeal']),
-                            //   ),
-                            // );
+                            cm.addToCartFunc(
+                              ProductClass(
+                                id: meal.id,
+                                name: meal.name,
+                                category: meal.category,
+                                area: meal.area,
+                                instructions: meal.area,
+                                thumbnail: meal.thumbnail,
+                                ingredients: meal.ingredients,
+                                measures: meal.measures,
+                                quantity: 1,
+                                rating: (meal.id.hashCode % 5) + 1,
+                                price: (5 + (meal.id.hashCode % 20)),
+                              ),
+                            );
                             CustomSnackbar.show(
                               context,
                               '${meal.name} Added to Cart',
