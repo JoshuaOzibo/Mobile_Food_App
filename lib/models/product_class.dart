@@ -8,7 +8,7 @@ class ProductClass {
   final String? youtube;
   final List<String> ingredients;
   final List<String> measures;
-  final int? quantity;
+   int? quantity;
   final double? rating;
   final double? price;
 

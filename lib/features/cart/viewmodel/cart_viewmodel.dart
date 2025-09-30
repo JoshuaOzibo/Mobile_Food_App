@@ -1,22 +1,53 @@
-
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/models/product_class.dart';
 
 class CartViewmodel extends ChangeNotifier {
   final List<ProductClass> _cart = [];
-   List<ProductClass> get getCartItems => _cart;
+  final double deliveryFee = 1.50;
+  List<ProductClass> get getCartItems => _cart;
 
-
-  void addToCartFunc (ProductClass meal){
+  void addToCartFunc(ProductClass meal) {
     _cart.add(meal);
     print(_cart);
     notifyListeners();
   }
-  void removeFromCartFunc (ProductClass meal){
+
+  void removeFromCartFunc(ProductClass meal) {
     _cart.remove(meal);
     notifyListeners();
   }
 
   // get price
-   get getMealPrice => _cart;
+  double get getSubTotal {
+    final subtotalPrice = _cart.fold(
+      0.0,
+      (previousValue, element) => previousValue + (element.price! * element.quantity!),
+    );
+    return double.parse(subtotalPrice.toString());
+  }
+
+  double get totalShopping {
+    if(_cart.isEmpty) return 0.0;
+    final total = getSubTotal + deliveryFee;
+    return total;
+  }
+
+  void incrementQuantity(ProductClass product) {
+    final findIndex = _cart.indexWhere((item) => item.id == product.id);
+    final currentQty = _cart[findIndex].quantity ?? 1;
+    _cart[findIndex].quantity = currentQty + 1;
+    notifyListeners();
+  }
+
+  void decrementQuantity(ProductClass product) {
+    final findIndex = _cart.indexWhere((item) => item.id == product.id);
+
+    final getSingleFoodQty = _cart[findIndex].quantity;
+    if (getSingleFoodQty == 1) {
+      _cart.removeAt(findIndex);
+    } else {
+      final currentQty = _cart[findIndex].quantity ?? 1;
+      _cart[findIndex].quantity = currentQty - 1;
+    }
+  }
 }

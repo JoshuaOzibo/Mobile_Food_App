@@ -3,7 +3,6 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/features/cart/viewmodel/cart_viewmodel.dart';
 import 'package:mobile_food_app/models/product_class.dart';
-import 'package:mobile_food_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 class CartCard extends StatelessWidget {
@@ -26,6 +25,7 @@ class CartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cv = context.read<CartViewmodel>();
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7),
       width: double.infinity,
@@ -102,8 +102,7 @@ class CartCard extends StatelessWidget {
                             spacing: 15,
                             children: [
                               GestureDetector(
-                                onTap: () => print('object'),
-                                    // cm.decrement(singleItem),
+                                onTap: () => cv.decrementQuantity(singleItem),
                                 child: Icon(uiIcons['remove'], size: 23),
                               ),
                               Text(
@@ -114,16 +113,14 @@ class CartCard extends StatelessWidget {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () => print('object'),
-                                    // productProvider.increment(singleItem),
+                                onTap: () => cv.incrementQuantity(singleItem),
                                 child: Icon(uiIcons['add'], size: 23),
                               ),
                             ],
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => print('object'),
-                              // productProvider.removeProduct(singleItem),
+                          onTap: () => cv.removeFromCartFunc(singleItem),
                           child: Icon(
                             uiIcons['delete'],
                             color: NovaColors.chipsRed,

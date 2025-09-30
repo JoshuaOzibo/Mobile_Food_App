@@ -5,7 +5,6 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/features/cart/viewmodel/cart_viewmodel.dart';
 import 'package:provider/provider.dart';
-import 'package:mobile_food_app/providers/cart_provider.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key, required this.onNavigateHome});
@@ -14,7 +13,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cm = context.watch<CartViewmodel>();
+    final cv = context.watch<CartViewmodel>();
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -53,7 +52,7 @@ class CartScreen extends StatelessWidget {
                     child: Center(
                       child: Text(
                         // textAlign: TextAlign.center,
-                        cm.getCartItems.length.toString(),
+                        cv.getCartItems.length.toString(),
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -75,10 +74,10 @@ class CartScreen extends StatelessWidget {
               height: 460,
               child: ListView(
                 addSemanticIndexes: true,
-                semanticChildCount: cm.getCartItems.length,
+                semanticChildCount: cv.getCartItems.length,
                 padding: EdgeInsets.symmetric(horizontal: 5),
                 children: [
-                  if (cm.getCartItems.isEmpty)
+                  if (cv.getCartItems.isEmpty)
                     Center(
                       child: SizedBox(
                         height: 400,
@@ -89,7 +88,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
 
-                  ...cm.getCartItems.map(
+                  ...cv.getCartItems.map(
                     (item) => CartCard(
                       image: item.thumbnail,
                       title: item.name,
@@ -117,8 +116,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '0.0',
-                      // '\$${cartItems.subTotal.toString()}',
+                      '\$${cv.getSubTotal.toString()}',
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w400,
@@ -137,8 +135,7 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '0.0',
-                      // '\$${cartItems.cart.isEmpty ? 0.0 : cartItems.deliveryFee.toString()}',
+                      '\$${cv.getCartItems.isEmpty ? 0.0 : cv.deliveryFee.toString()}',
                       style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.w400,
@@ -157,8 +154,7 @@ class CartScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 23, fontWeight: FontWeight.w400),
                 ),
                 Text(
-                  '0.0',
-                  // '\$${cartItems.total.toString()}',
+                  '\$${cv.totalShopping.toString()}',
                   style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600),
                 ),
               ],
