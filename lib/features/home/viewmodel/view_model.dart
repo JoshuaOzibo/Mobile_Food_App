@@ -35,27 +35,29 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchByName(name) async{
+  Future<void> fetchByName(String name) async {
     isLoading = true;
     errorMessage = null;
     notifyListeners();
-    try{
-      final fetchedMealByName = await repository.fetchByFoodName(name);
-      _products = fetchedMealByName;
-      if(fetchedMealByName.isEmpty){
-        errorMessage = 'No meals found for name $name';
+    try {
+      final fetchedMeals = await repository.fetchByFoodName(name);
+      _products = fetchedMeals;
+      if (fetchedMeals.isEmpty) {
+        errorMessage = 'No meals found for $name';
       }
-    }catch(e){
+    } catch (e) {
       _products = [];
-      print(e);
+      errorMessage = 'error fetching food data by letter: ${e.toString()}';
+    } finally {
       isLoading = false;
-      throw Exception('Error fetching food by name');
+      notifyListeners();
     }
   }
 
   Future<void> searchFoodCategory(category) async{
     isLoading = true;
     errorMessage = null;
+    notifyListeners();
     try{
       final searchedMeal = await repository.searchFoodByCategory(category);
       _products = searchedMeal;
@@ -65,9 +67,12 @@ class HomeViewModel extends ChangeNotifier {
 
     }catch(e){
       _products = [];
-      isLoading = false;
+       errorMessage = 'error fetching food data by letter: ${e.toString()}';
       print(e);
       throw Exception('Error searching for food $e');
+    }finally{
+      isLoading = false;
+      notifyListeners();
     }
   }
 }

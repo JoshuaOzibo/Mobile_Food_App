@@ -19,8 +19,8 @@ class Index extends StatefulWidget {
   State<Index> createState() => _IndexState();
 }
 
-bool isTextSelected = true;
 bool isFavoriteClicked = false;
+bool isTextSelected = true;
 String selectedText = 'Pasta';
 String letterValue = 'a';
 String errorMessage = '';
@@ -40,7 +40,6 @@ class _IndexState extends State<Index> {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<HomeViewModel>();
-    print(vm.getProducts);
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -127,8 +126,10 @@ class _IndexState extends State<Index> {
                 children: [
                   Expanded(
                     child: SearchInput(
-                      onChange: (value) => print('hello'),
-                      // onChange: (value) => _handleSaerchByCategoty(value),
+                      onChange: (value) => setState(() {
+                        vm.getProducts.clear();
+                        vm.searchFoodCategory(value);
+                      }),
                     ),
                   ),
                   Container(
@@ -143,10 +144,10 @@ class _IndexState extends State<Index> {
                       child: Dropdown(
                         handleSelectLetter: (item) {
                           setState(() {
-                            meals = [];
+                            vm.getProducts.clear();
                             letterValue = item;
                           });
-                          // _fetchMeals();
+                          vm.fetchProducts(letterValue);
                         },
                       ),
                     ),
@@ -169,10 +170,15 @@ class _IndexState extends State<Index> {
                     (item) => FilterButton(
                       text: item,
                       isSelected: selectedText == item
-                          ? isTextSelected
+                          ? isTextSelected 
                           : !isTextSelected,
-                      onTapFilter: () => print('object'),
-                      // onTapFilter: () => _fetchFoodCategory(item),
+                      onTapFilter: () => {
+                        selectedText =item,
+                        setState(() {
+                          vm.getProducts.clear();
+                        vm.fetchByName(item);
+                        }),
+                      },
                     ),
                   ),
                 ],
