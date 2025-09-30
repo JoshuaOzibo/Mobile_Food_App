@@ -37,7 +37,7 @@ or a quick preview:
 ---
 
 <p align="center">
-  <img src="assets/images/cart_screen.png" alt="Cart Screen" width="200"/>                  <img src="assets/images/food_details_2.png" alt="Favorite Screen" width="200"/>               <img src="assets/images/food_details_1.png" alt="Food details second screen" width="200"/> 
+  <img src="assets/images/cart_screen.png" alt="Cart Screen" width="200"/>                  <img src="assets/images/favorite_screen.png" alt="Favorite Screen" width="200"/>               <img src="assets/images/food_details_1.png" alt="Food details second screen" width="200"/> 
 </p>
 
 ---
