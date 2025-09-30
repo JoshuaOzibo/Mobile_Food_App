@@ -193,11 +193,11 @@ class _IndexState extends State<Index> {
               ),
             ),
 
-          if (vm.getProducts.isEmpty && !vm.isLoading)
+          if (vm.getProducts.isEmpty && !vm.isLoading && vm.errorMessage != null)
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
-                child: Text('product is empty'),
+                child: Text(vm.errorMessage!),
               ),
             ),
 

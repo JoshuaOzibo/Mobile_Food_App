@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_food_app/features/home/repositories/home_page_repository.dart';
 import 'package:mobile_food_app/features/home/screen/home_page.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/features/home/viewmodel/view_model.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
       // ChangeNotifierProvider(create: (context) => CartProvider()),
-      ChangeNotifierProvider(create: (context) => HomeViewModel()),
+      ChangeNotifierProvider(create: (context) => HomeViewModel(repository: HomePageRepository())),
       // ChangeNotifierProvider(create: (context) => FavoriteItemProvider()),
       ],
       child: MaterialApp(
