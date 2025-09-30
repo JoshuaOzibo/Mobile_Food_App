@@ -8,8 +8,6 @@ import 'package:mobile_food_app/features/details/screen/food_details.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
 import 'package:mobile_food_app/features/home/components/search_input.dart';
-import 'package:mobile_food_app/models/product_class.dart';
-import 'package:mobile_food_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_food_app/features/home/components/drop_down.dart';
 import 'package:mobile_food_app/features/home/viewmodel/view_model.dart';
@@ -27,146 +25,22 @@ String selectedText = 'Pasta';
 String letterValue = 'a';
 String errorMessage = '';
 bool isMealLoading = true;
-final homeFoodFetcher = FetchHomeData();
+// final homeFoodFetcher = FetchHomeData();
 List<dynamic>? meals = [];
 
 class _IndexState extends State<Index> {
   @override
   void initState() {
     super.initState();
-    _fetchMeals();
-  }
-
-  Future<void> _fetchMeals() async {
-    setState(() {
-      isMealLoading = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeViewModel>().fetchProducts(letterValue);
     });
-    try {
-      final fetchByLetter = await homeFoodFetcher.fetchData(
-        letter: letterValue,
-      );
-      if (fetchByLetter != null && fetchByLetter['meals'] != null) {
-        setState(() {
-          meals!.addAll(fetchByLetter['meals']);
-          isMealLoading = false;
-        });
-      }
-      if (fetchByLetter?['meals'] == null) {
-        errorMessage = 'food with letter $letterValue is not avaliable';
-        setState(() {
-          isMealLoading = false;
-          CustomSnackbar.show(
-            context,
-            'No food found for letter $letterValue',
-            NovaColors.primaryOrange,
-          );
-        });
-      }
-      if (fetchByLetter == null) {
-        errorMessage = 'error fetching food check your internet connection';
-      }
-      setState(() {
-        isMealLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        meals = [];
-        isMealLoading = false;
-      });
-      print(e);
-    }
-  }
-
-  Future<void> _fetchFoodCategory(item) async {
-    setState(() {
-      isMealLoading = true;
-      meals = [];
-      selectedText = item;
-    });
-    try {
-      final fetchFood = await homeFoodFetcher.fetchFoodByName(
-        name: selectedText,
-      );
-      if (fetchFood != null && fetchFood['meals'] != null) {
-        setState(() {
-          meals!.addAll(fetchFood['meals']);
-          isMealLoading = false;
-        });
-
-        if (fetchFood['meals'] == null) {
-          errorMessage = 'food with name $item is not avaliable';
-          setState(() {
-            isMealLoading = false;
-          });
-        }
-        if (fetchFood == null) {
-          errorMessage = 'error fetching food check your internet connection';
-        }
-      } else {
-        setState(() {
-          isMealLoading = false;
-          meals = [];
-        });
-      }
-    } catch (e) {
-      setState(() {
-        meals = [];
-        isMealLoading = false;
-      });
-      print('$e');
-    }
-  }
-
-  Future<void> _handleSaerchByCategoty(category) async {
-    setState(() {
-      isMealLoading = true;
-      meals = [];
-    });
-    try {
-      final searchCategory = await homeFoodFetcher.searchFoodByCategory(
-        category: category,
-      );
-      if (searchCategory != null && searchCategory['meals'] != null) {
-        setState(() {
-          meals!.addAll(searchCategory['meals']);
-          isMealLoading = false;
-        });
-      }
-      if (searchCategory?['meals'] == null) {
-        errorMessage = 'food with category $category is not avaliable';
-        setState(() {
-          isMealLoading = false;
-          CustomSnackbar.show(
-            context,
-            'No food category found for $category',
-            NovaColors.primaryOrange,
-          );
-        });
-      }
-      if (searchCategory == null) {
-        errorMessage = 'error fetching food check your internet connection';
-      }
-    } catch (e) {
-      setState(() {
-        isMealLoading = false;
-        meals = [];
-      });
-      print(e);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final providerHandler = Provider.of<CartProvider>(context, listen: false);
-    final cartChecker = Provider.of<CartProvider>(context, listen: true).cart;
-    final favoriteProviderHandler = Provider.of<FavoriteItemProvider>(
-      context,
-      listen: false,
-    );
-    final favChecker = Provider.of<FavoriteItemProvider>(
-      context,
-      listen: true,
-    ).favoriteList;
+    final vm = context.watch<HomeViewModel>();
+    print(vm.getProducts);
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -253,7 +127,8 @@ class _IndexState extends State<Index> {
                 children: [
                   Expanded(
                     child: SearchInput(
-                      onChange: (value) => _handleSaerchByCategoty(value),
+                      onChange: (value) => print('hello'),
+                      // onChange: (value) => _handleSaerchByCategoty(value),
                     ),
                   ),
                   Container(
@@ -271,7 +146,7 @@ class _IndexState extends State<Index> {
                             meals = [];
                             letterValue = item;
                           });
-                          _fetchMeals();
+                          // _fetchMeals();
                         },
                       ),
                     ),
@@ -296,7 +171,8 @@ class _IndexState extends State<Index> {
                       isSelected: selectedText == item
                           ? isTextSelected
                           : !isTextSelected,
-                      onTapFilter: () => _fetchFoodCategory(item),
+                      onTapFilter: () => print('object'),
+                      // onTapFilter: () => _fetchFoodCategory(item),
                     ),
                   ),
                 ],
@@ -306,7 +182,7 @@ class _IndexState extends State<Index> {
 
           const SizedBox(height: 40),
 
-          if (isMealLoading)
+          if (vm.isLoading)
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
@@ -317,15 +193,15 @@ class _IndexState extends State<Index> {
               ),
             ),
 
-          if (!isMealLoading && meals!.isEmpty)
+          if (vm.getProducts.isEmpty && !vm.isLoading)
             Center(
               child: Container(
                 margin: EdgeInsets.only(top: 150),
-                child: Text(errorMessage),
+                child: Text('product is empty'),
               ),
             ),
 
-          if (meals!.isNotEmpty)
+          if (vm.getProducts.isNotEmpty)
             SizedBox(
               height: 390,
               child: Container(
@@ -339,68 +215,68 @@ class _IndexState extends State<Index> {
                   ),
 
                   children: [
-                    ...meals!.map(
+                    ...vm.getProducts.map(
                       (meal) => ProductCard(
-                        image: meal['strMealThumb'],
-                        title: meal['strMeal'],
-                        subTitle: meal['strCategory'],
-                        price: (5 + (meal['idMeal'].hashCode % 20)).toDouble(),
-                        rating: (meal['idMeal'].hashCode % 5) + 1,
+                        image: meal.thumbnail,
+                        title: meal.name,
+                        subTitle: meal.category,
+                        price: (5 + (meal.id.hashCode % 20)).toDouble(),
+                        rating: (meal.id.hashCode % 5) + 1,
                         handleProductTap: () {
-                          final exist = cartChecker.any(
-                            (item) => item.index == meal['idMeal'],
+                          final exist = vm.getProducts.any(
+                            (item) => item.id == meal.id,
                           );
                           if (exist) {
                             CustomSnackbar.show(
                               context,
-                              '${meal['strMeal']} Already in Cart',
+                              '${meal.name} Already in Cart',
                               const Color.fromARGB(255, 223, 15, 0),
                             );
                           } else {
-                            providerHandler.addProduct(
-                              ProductClass(
-                                index: meal['idMeal'],
-                                image: meal['strMealThumb'],
-                                price: (5 + (meal['idMeal'].hashCode % 20)),
-                                quantity: 1,
-                                rating: (meal['idMeal'].hashCode % 5) + 1,
-                                subTitle: meal['strCategory'],
-                                title: limitToTwoWords(meal['strMeal']),
-                              ),
-                            );
+                            // providerHandler.addProduct(
+                            //   ProductClass(
+                            //     index: meal['idMeal'],
+                            //     image: meal['strMealThumb'],
+                            //     price: (5 + (meal['idMeal'].hashCode % 20)),
+                            //     quantity: 1,
+                            //     rating: (meal['idMeal'].hashCode % 5) + 1,
+                            //     subTitle: meal['strCategory'],
+                            //     title: limitToTwoWords(meal['strMeal']),
+                            //   ),
+                            // );
                             CustomSnackbar.show(
                               context,
-                              '${meal['strMeal']} Added to Cart',
+                              '${meal.name} Added to Cart',
                               NovaColors.primaryOrange,
                             );
                           }
                         },
                         isClicked: isFavoriteClicked,
                         handleTapedLiked: () {
-                          final exist = favChecker.any(
-                            (item) => item.index == meal['idMeal'],
+                          final exist = vm.getProducts.any(
+                            (item) => item.id == meal.id,
                           );
                           if (exist) {
                             CustomSnackbar.show(
                               context,
-                              '${meal['strMeal']} Already in Favorite list',
+                              '${meal.name} Already in Favorite list',
                               const Color.fromARGB(255, 223, 15, 0),
                             );
                           } else {
-                            favoriteProviderHandler.addFavorite(
-                              ProductClass(
-                                image: meal['strMealThumb'],
-                                price: (5 + (meal['idMeal'].hashCode % 20)),
-                                subTitle: meal['strCategory'],
-                                title: limitToTwoWords(meal['strMeal']),
-                                index: meal['idMeal'],
-                                quantity: 1,
-                                rating: (meal['idMeal'].hashCode % 5) + 1,
-                              ),
-                            );
+                            // favoriteProviderHandler.addFavorite(
+                            //   ProductClass(
+                            //     image: meal['strMealThumb'],
+                            //     price: (5 + (meal['idMeal'].hashCode % 20)),
+                            //     subTitle: meal['strCategory'],
+                            //     title: limitToTwoWords(meal['strMeal']),
+                            //     index: meal['idMeal'],
+                            //     quantity: 1,
+                            //     rating: (meal['idMeal'].hashCode % 5) + 1,
+                            //   ),
+                            // );
                             CustomSnackbar.show(
                               context,
-                              '${meal['strMeal']} Added to Favorite',
+                              '${meal.name} Added to Favorite',
                               NovaColors.primaryOrange,
                             );
                           }

@@ -4,11 +4,12 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/features/details/component/size_button.dart';
+import 'package:mobile_food_app/models/product_class.dart';
 
 class FoodDetails extends StatelessWidget {
   const FoodDetails({super.key, required this.meal});
 
-  final Map<String, dynamic> meal;
+  final ProductClass meal;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class FoodDetails extends StatelessWidget {
                       width: double.infinity,
                       height: 550,
                       fit: BoxFit.fitHeight,
-                      imageUrl: meal['strMealThumb'],
+                      imageUrl: meal.thumbnail,
                       progressIndicatorBuilder:
                           (context, url, downloadProgress) =>
                               CircularProgressIndicator(
@@ -97,7 +98,7 @@ class FoodDetails extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                            limitToTwoWords(meal['strMeal']),
+                            limitToTwoWords(meal.name),
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -106,7 +107,7 @@ class FoodDetails extends StatelessWidget {
                               softWrap: true, 
                             ),
                             Text(
-                              meal['strCategory'],
+                              meal.category,
                               style: TextStyle(
                                 fontSize: 10,
                                 color: NovaColors.textGray,
@@ -124,7 +125,7 @@ class FoodDetails extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  '${meal['idMeal'].hashCode % 5 + 1}',
+                                  '${meal.id.hashCode % 5 + 1}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
@@ -247,7 +248,7 @@ class FoodDetails extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '\$${(5 + (meal['idMeal'].hashCode % 20))}',
+                            '\$${(5 + (meal.id.hashCode % 20))}',
                             style: TextStyle(
                               fontSize: 20,
                               decoration: TextDecoration.none,

@@ -22,26 +22,26 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final pages = [
       Index(),
-      CartScreen(
-        onNavigateHome: () => setState(() {
-          currentBottomIndex = 0;
-        }),
-      ),
-      FavoriteScreen(
-        onNavigateHome: () => setState(() {
-          currentBottomIndex = 0;
-        }),
-      ),
+      // CartScreen(
+      //   onNavigateHome: () => setState(() {
+      //     currentBottomIndex = 0;
+      //   }),
+      // ),
+      // FavoriteScreen(
+      //   onNavigateHome: () => setState(() {
+      //     currentBottomIndex = 0;
+      //   }),
+      // ),
       NotificationScreen(),
     ];
-    final cartLength = Provider.of<CartProvider>(
-      context,
-      listen: true,
-    ).cart.length;
-    final favoriteLength = Provider.of<FavoriteItemProvider>(
-      context,
-      listen: true,
-    ).favoriteList.length;
+    // final cartLength = Provider.of<CartProvider>(
+    //   context,
+    //   listen: true,
+    // ).cart.length;
+    // final favoriteLength = Provider.of<FavoriteItemProvider>(
+    //   context,
+    //   listen: true,
+    // ).favoriteList.length;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(13, 13, 13, 1),
       body: IndexedStack(index: currentBottomIndex, children: pages),
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
             icon: Stack(
               children: [
                 Icon(uiIcons['shopping_bag'], size: 20),
-                if (cartLength > 0)
+                // if (cartLength > 0)
                   Positioned(
                     left: 10,
                     child: Container(
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
             icon: Stack(
               children: [
                 Icon(uiIcons['favorite'], size: 20),
-                if (favoriteLength > 0)
+                // if (favoriteLength > 0)
                   Positioned(
                     left: 10,
                     child: Container(
