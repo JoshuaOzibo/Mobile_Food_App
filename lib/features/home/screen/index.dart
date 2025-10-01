@@ -6,6 +6,7 @@ import 'package:mobile_food_app/core/app_text.dart';
 import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/features/cart/viewmodel/cart_viewmodel.dart';
 import 'package:mobile_food_app/features/details/screen/food_details.dart';
+import 'package:mobile_food_app/features/favorite/viewmodel/favorite_viewmodel.dart';
 import 'package:mobile_food_app/features/home/components/filter_button.dart';
 import 'package:mobile_food_app/features/home/components/product_card.dart';
 import 'package:mobile_food_app/features/home/components/search_input.dart';
@@ -43,6 +44,7 @@ class _IndexState extends State<Index> {
   Widget build(BuildContext context) {
     final vm = context.watch<HomeViewModel>();
     final cm = context.watch<CartViewmodel>();
+    final fv = context.watch<FavoriteViewmodel>();
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -268,7 +270,7 @@ class _IndexState extends State<Index> {
                         },
                         isClicked: isFavoriteClicked,
                         handleTapedLiked: () {
-                          final exist = vm.getProducts.any(
+                          final exist = fv.getFavList.any(
                             (item) => item.id == meal.id,
                           );
                           if (exist) {
@@ -278,17 +280,21 @@ class _IndexState extends State<Index> {
                               const Color.fromARGB(255, 223, 15, 0),
                             );
                           } else {
-                            // favoriteProviderHandler.addFavorite(
-                            //   ProductClass(
-                            //     image: meal['strMealThumb'],
-                            //     price: (5 + (meal['idMeal'].hashCode % 20)),
-                            //     subTitle: meal['strCategory'],
-                            //     title: limitToTwoWords(meal['strMeal']),
-                            //     index: meal['idMeal'],
-                            //     quantity: 1,
-                            //     rating: (meal['idMeal'].hashCode % 5) + 1,
-                            //   ),
-                            // );
+                            fv.addToFavorite(
+                              ProductClass(
+                                id: meal.id,
+                                name: meal.name,
+                                category: meal.category,
+                                area: meal.area,
+                                instructions: meal.area,
+                                thumbnail: meal.thumbnail,
+                                ingredients: meal.ingredients,
+                                measures: meal.measures,
+                                quantity: 1,
+                                rating: (meal.id.hashCode % 5) + 1,
+                                price: (5 + (meal.id.hashCode % 20)),
+                              ),
+                            );
                             CustomSnackbar.show(
                               context,
                               '${meal.name} Added to Favorite',

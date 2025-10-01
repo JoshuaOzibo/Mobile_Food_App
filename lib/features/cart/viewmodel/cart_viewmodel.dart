@@ -8,7 +8,6 @@ class CartViewmodel extends ChangeNotifier {
 
   void addToCartFunc(ProductClass meal) {
     _cart.add(meal);
-    print(_cart);
     notifyListeners();
   }
 
@@ -41,13 +40,13 @@ class CartViewmodel extends ChangeNotifier {
 
   void decrementQuantity(ProductClass product) {
     final findIndex = _cart.indexWhere((item) => item.id == product.id);
-
     final getSingleFoodQty = _cart[findIndex].quantity;
     if (getSingleFoodQty == 1) {
-      _cart.removeAt(findIndex);
+      _cart.remove(product);
     } else {
       final currentQty = _cart[findIndex].quantity ?? 1;
       _cart[findIndex].quantity = currentQty - 1;
     }
+    notifyListeners();
   }
 }

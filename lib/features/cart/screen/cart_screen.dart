@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_food_app/core/components/empty_state.dart';
+import 'package:mobile_food_app/core/components/text_helper.dart';
 import 'package:mobile_food_app/features/cart/components/card.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
@@ -91,7 +92,7 @@ class CartScreen extends StatelessWidget {
                   ...cv.getCartItems.map(
                     (item) => CartCard(
                       image: item.thumbnail,
-                      title: item.name,
+                      title: limitToTwoWords(item.name),
                       subTitle: item.category,
                       price: item.price,
                       quantity: item.quantity,
