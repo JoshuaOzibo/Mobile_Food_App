@@ -8,31 +8,37 @@ class CartViewmodel extends ChangeNotifier {
   final double deliveryFee = 1.50;
   List<ProductClass> get getCartItems => _cart;
 
-  final Box<DatabaseProductClass>? cartBox;
+  final Box<DatabaseProductClass> cartBox;
 
-  CartViewmodel({this.cartBox}){
+  CartViewmodel({required this.cartBox}){
     loadCart();
   }
 
   void loadCart() {
-   if(cartBox != null){
-     final dbProducts = cartBox!.values.toList();
+     final dbProducts = cartBox.values.toList();
     _cart.clear();
     for (var dbProduct in dbProducts) {
       _cart.add(dbProduct.toProduct());
     notifyListeners();
     }
-   }
+
   }
 
-  void addToCartFunc(meal) {
+  void addToCartFunc( ProductClass meal) {
     final dbProduct = DatabaseProductClass.fromProduct(meal);
-    cartBox!.add(dbProduct);
+    final mealExist = cartBox.values.any((item) => item.id == meal.id);
+    if(mealExist){
+      return;
+    }else{
+    cartBox.add(dbProduct);
     _cart.add(meal);
+    }
     notifyListeners();
   }
 
   void removeFromCartFunc(ProductClass meal) {
+    final dbProduct = DatabaseProductClass.fromProduct(meal);
+    cartBox.delete(dbProduct);
     _cart.remove(meal);
     notifyListeners();
   }

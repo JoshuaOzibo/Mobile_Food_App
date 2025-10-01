@@ -13,7 +13,7 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fv = context.read<FavoriteViewmodel>();
+    final favouriteVm = context.read<FavoriteViewmodel>();
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
@@ -44,20 +44,20 @@ class FavoriteScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  if (fv.getFavList.isEmpty)
+                  if (favouriteVm.getFavList.isEmpty)
                     Container(
                       margin: EdgeInsets.only(top: 150),
                       child: EmptyState(text: 'Favourite '),
                     ),
-                  ...fv.getFavList.map(
+                  ...favouriteVm.getFavList.map(
                     (item) => FavoriteCard(
                       image: item.thumbnail,
                       title: limitToTwoWords(item.name),
                       subTitle: item.category,
                       price: item.price!,
                       handleRemoveFavoriteItemFromList: () =>
-                          fv.removeFromFavorite(item),
-                      handleAddToCart: () => fv.addToCart(item),
+                          favouriteVm.removeFromFavorite(item),
+                      handleAddToCart: () => favouriteVm.addToCart(item),
                     ),
                   ),
                 ],
