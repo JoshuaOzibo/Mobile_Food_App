@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:mobile_food_app/features/cart/databaseType/db_product_class.dart';
 import 'package:mobile_food_app/models/product_class.dart';
 
 class CartViewmodel extends ChangeNotifier {
@@ -6,7 +8,26 @@ class CartViewmodel extends ChangeNotifier {
   final double deliveryFee = 1.50;
   List<ProductClass> get getCartItems => _cart;
 
-  void addToCartFunc(ProductClass meal) {
+  final Box<DatabaseProductClass>? cartBox;
+
+  CartViewmodel({this.cartBox}){
+    loadCart();
+  }
+
+  void loadCart() {
+   if(cartBox != null){
+     final dbProducts = cartBox!.values.toList();
+    _cart.clear();
+    for (var dbProduct in dbProducts) {
+      _cart.add(dbProduct.toProduct());
+    notifyListeners();
+    }
+   }
+  }
+
+  void addToCartFunc(meal) {
+    final dbProduct = DatabaseProductClass.fromProduct(meal);
+    cartBox!.add(dbProduct);
     _cart.add(meal);
     notifyListeners();
   }
@@ -20,13 +41,14 @@ class CartViewmodel extends ChangeNotifier {
   double get getSubTotal {
     final subtotalPrice = _cart.fold(
       0.0,
-      (previousValue, element) => previousValue + (element.price! * element.quantity!),
+      (previousValue, element) =>
+          previousValue + (element.price! * element.quantity!),
     );
     return double.parse(subtotalPrice.toString());
   }
 
   double get totalShopping {
-    if(_cart.isEmpty) return 0.0;
+    if (_cart.isEmpty) return 0.0;
     final total = getSubTotal + deliveryFee;
     return total;
   }

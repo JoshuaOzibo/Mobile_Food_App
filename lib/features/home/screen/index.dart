@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:mobile_food_app/core/components/snackbar.dart';
 import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
@@ -28,12 +29,11 @@ String selectedText = 'Pasta';
 String letterValue = 'a';
 String errorMessage = '';
 bool isMealLoading = true;
-// final homeFoodFetcher = FetchHomeData();
 List<dynamic>? meals = [];
 
 class _IndexState extends State<Index> {
   @override
-  void initState() {
+  void initState(){
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeViewModel>().fetchProducts(letterValue);
