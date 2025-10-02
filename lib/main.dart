@@ -14,8 +14,8 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DatabaseProductClassAdapter());
 
-  final cartBox = await Hive.openBox<DatabaseProductClass>('cart');
-  final favoriteItem = await Hive.openBox<DatabaseProductClass>('favorite');
+  await Hive.openBox<DatabaseProductClass>('cart');
+   await Hive.openBox<DatabaseProductClass>('favorite');
 
   runApp(
     MultiProvider(
@@ -24,7 +24,7 @@ void main() async {
           create: (_) => HomeViewModel(repository: HomePageRepository()),
         ),
         ChangeNotifierProvider(create: (_) => CartViewmodel()),
-        ChangeNotifierProvider(create: (_) => FavoriteViewmodel(favoriteItem: favoriteItem, )),
+        ChangeNotifierProvider(create: (_) => FavoriteViewmodel()),
       ],
       child: const MyApp(),
     ),

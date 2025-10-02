@@ -57,7 +57,6 @@ class CartViewmodel extends ChangeNotifier {
     final indexOfSingleItem = hiveCartStorage.values.toList().indexWhere(
       (item) => item.id == product.id,
     );
-
     if (indexOfSingleItem != -1) {
       // get the dbIndexOfThatItem
       final getItem = hiveCartStorage.getAt(indexOfSingleItem);
@@ -65,23 +64,6 @@ class CartViewmodel extends ChangeNotifier {
         index: indexOfSingleItem,
         getItem: getItem,
       );
-      // // updated items
-      // final updatedItem = DatabaseProductClass(
-      //   id: getItem!.id,
-      //   area: getItem.area,
-      //   category: getItem.category,
-      //   ingredients: getItem.ingredients,
-      //   instructions: getItem.instructions,
-      //   measures: getItem.measures,
-      //   name: getItem.name,
-      //   price: getItem.price,
-      //   quantity: getItem.quantity + 1,
-      //   rating: getItem.rating,
-      //   thumbnail: getItem.thumbnail,
-      //   youtube: getItem.youtube,
-      // );
-
-      // hiveCartStorage.putAt(indexOfSingleItem, updatedItem);
     }
 
     // ui
@@ -97,26 +79,13 @@ class CartViewmodel extends ChangeNotifier {
       (item) => item.id == product.id,
     );
 
+    // get singleItem
     final dbItem = hiveCartStorage.getAt(itemIndex);
-
-    incrementHelperFunc.updateModelHelper(index: itemIndex, getItem: dbItem);
-
-    // final updatedItem = DatabaseProductClass(
-    //   id: dbItem!.id,
-    //   area: dbItem.area,
-    //   category: dbItem.category,
-    //   ingredients: dbItem.ingredients,
-    //   instructions: dbItem.instructions,
-    //   measures: dbItem.measures,
-    //   name: dbItem.name,
-    //   price: dbItem.price,
-    //   quantity: dbItem.quantity - 1,
-    //   rating: dbItem.rating,
-    //   thumbnail: dbItem.thumbnail,
-    //   youtube: dbItem.youtube,
-    // );
-
-    // hiveCartStorage.putAt(itemIndex, updatedItem);
+    if (dbItem!.quantity == 1) {
+      hiveCartStorage.deleteAt(itemIndex);
+    } else {
+      decrementHelperFunc.updateModelHelper(index: itemIndex, getItem: dbItem);
+    }
 
     // ui
     final findIndex = _cart.indexWhere((item) => item.id == product.id);

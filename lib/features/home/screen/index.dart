@@ -39,6 +39,7 @@ class _IndexState extends State<Index> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeViewModel>().fetchProducts(letterValue);
       context.read<CartViewmodel>().fetchDbCart();
+      context.read<FavoriteViewmodel>().loadFavorite();
     });
   }
 
