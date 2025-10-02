@@ -8,11 +8,11 @@ class FavoriteViewmodel extends ChangeNotifier {
   final List<ProductClass> _favoriteList = [];
   List<ProductClass> get getFavList => [];
   final Box<DatabaseProductClass> favoriteItem ;
-  final Box<DatabaseProductClass> cartBox;
+  // final Box<DatabaseProductClass> cartBox;
   late CartViewmodel _cartViewmodel;
 
-  FavoriteViewmodel({required this.favoriteItem, required this.cartBox}){
-    _cartViewmodel = CartViewmodel(cartBox: cartBox);
+  FavoriteViewmodel({required this.favoriteItem,}){
+    // _cartViewmodel = CartViewmodel(cartBox: cartBox);
   }
 
   void loadFavorite(){

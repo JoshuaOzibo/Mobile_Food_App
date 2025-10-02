@@ -5,6 +5,7 @@ import 'package:mobile_food_app/core/icons.dart';
 import 'package:mobile_food_app/core/nova_colors.dart';
 import 'package:mobile_food_app/core/app_text.dart';
 import 'package:mobile_food_app/core/components/text_helper.dart';
+import 'package:mobile_food_app/features/cart/databaseType/db_product_class.dart';
 import 'package:mobile_food_app/features/cart/viewmodel/cart_viewmodel.dart';
 import 'package:mobile_food_app/features/details/screen/food_details.dart';
 import 'package:mobile_food_app/features/favorite/viewmodel/favorite_viewmodel.dart';
@@ -37,6 +38,7 @@ class _IndexState extends State<Index> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeViewModel>().fetchProducts(letterValue);
+      context.read<CartViewmodel>().fetchDbCart();
     });
   }
 

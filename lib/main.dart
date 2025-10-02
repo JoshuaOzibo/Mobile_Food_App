@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Hive.initFlutter();
   Hive.registerAdapter(DatabaseProductClassAdapter());
 
@@ -24,8 +23,8 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => HomeViewModel(repository: HomePageRepository()),
         ),
-        ChangeNotifierProvider(create: (_) => CartViewmodel(cartBox: cartBox)),
-        ChangeNotifierProvider(create: (_) => FavoriteViewmodel(favoriteItem: favoriteItem, cartBox: cartBox)),
+        ChangeNotifierProvider(create: (_) => CartViewmodel()),
+        ChangeNotifierProvider(create: (_) => FavoriteViewmodel(favoriteItem: favoriteItem, )),
       ],
       child: const MyApp(),
     ),

@@ -7,38 +7,27 @@ class CartViewmodel extends ChangeNotifier {
   final List<ProductClass> _cart = [];
   final double deliveryFee = 1.50;
   List<ProductClass> get getCartItems => _cart;
+  final Box<DatabaseProductClass> hiveCartStorage = Hive.box('cart');
 
-  final Box<DatabaseProductClass> cartBox;
-
-  CartViewmodel({required this.cartBox}){
-    loadCart();
-  }
-
-  void loadCart() {
-     final dbProducts = cartBox.values.toList();
-    _cart.clear();
-    for (var dbProduct in dbProducts) {
-      _cart.add(dbProduct.toProduct());
-    notifyListeners();
+  void fetchDbCart() {
+    for (var hiveCart in hiveCartStorage.values.toList()) {
+      _cart.add(hiveCart.toProduct());
+      notifyListeners();
     }
-
   }
 
-  void addToCartFunc( ProductClass meal) {
-    final dbProduct = DatabaseProductClass.fromProduct(meal);
-    final mealExist = cartBox.values.any((item) => item.id == meal.id);
-    if(mealExist){
-      return;
-    }else{
-    cartBox.add(dbProduct);
+  void addToCartFunc(ProductClass meal) {
+    final dbToUiModel = DatabaseProductClass.fromProduct(meal);
+    hiveCartStorage.add(dbToUiModel);
     _cart.add(meal);
-    }
     notifyListeners();
   }
 
   void removeFromCartFunc(ProductClass meal) {
-    final dbProduct = DatabaseProductClass.fromProduct(meal);
-    cartBox.delete(dbProduct);
+    final dbToUiModel = DatabaseProductClass.fromProduct(meal);
+    final hiveStorage = hiveCartStorage.values.toList();
+    final index = hiveStorage.indexWhere((item) => item.id == dbToUiModel.id);
+    hiveCartStorage.deleteAt(index);
     _cart.remove(meal);
     notifyListeners();
   }
@@ -60,6 +49,17 @@ class CartViewmodel extends ChangeNotifier {
   }
 
   void incrementQuantity(ProductClass product) {
+    // db
+    final currentDatabase = hiveCartStorage.values.toList();
+    final uiToDbModel = DatabaseProductClass.fromProduct(product);
+
+   final getItemId = currentDatabase.indexWhere((item) => item.id == uiToDbModel.id);
+   var currentItem = currentDatabase[getItemId];
+
+  currentItem.quantity  = currentDatabase[getItemId].quantity + 1;
+
+
+    // ui
     final findIndex = _cart.indexWhere((item) => item.id == product.id);
     final currentQty = _cart[findIndex].quantity ?? 1;
     _cart[findIndex].quantity = currentQty + 1;
@@ -67,6 +67,23 @@ class CartViewmodel extends ChangeNotifier {
   }
 
   void decrementQuantity(ProductClass product) {
+    // db
+    final hiveStorage = hiveCartStorage.values.toList();
+    for (var hiveSingleItem in hiveStorage) {
+      final findIndex = hiveSingleItem.toProduct().id == product.id;
+      if (hiveSingleItem.quantity == 1) {
+        findIndex ? hiveSingleItem.id != product.id : hiveSingleItem;
+        notifyListeners();
+      }
+    }
+    final findDbIndex = hiveStorage.indexWhere((item) => item.id == product.id);
+    final getSingleDbFoodQty = hiveStorage[findDbIndex].quantity;
+    if (getSingleDbFoodQty == 1) {
+      hiveStorage.removeAt(findDbIndex);
+    } else {
+      hiveStorage[findDbIndex].quantity - 1;
+    }
+    // ui
     final findIndex = _cart.indexWhere((item) => item.id == product.id);
     final getSingleFoodQty = _cart[findIndex].quantity;
     if (getSingleFoodQty == 1) {
