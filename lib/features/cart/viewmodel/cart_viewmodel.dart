@@ -9,11 +9,13 @@ class CartViewmodel extends ChangeNotifier {
   final List<ProductClass> _cart = [];
   final double deliveryFee = 1.50;
   List<ProductClass> get getCartItems => _cart;
+   set setCart(ProductClass product)=> _cart;
   final Box<DatabaseProductClass> hiveCartStorage = Hive.box('cart');
   final incrementHelperFunc = IncrementModelHelper();
   final decrementHelperFunc = DecrementModelHelper();
 
   void fetchDbCart() {
+    _cart.clear();
     for (var hiveCart in hiveCartStorage.values.toList()) {
       _cart.add(hiveCart.toProduct());
       notifyListeners();

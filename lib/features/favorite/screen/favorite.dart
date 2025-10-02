@@ -14,8 +14,6 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favouriteVm = context.watch<FavoriteViewmodel>();
-    print(favouriteVm.getFavList);
-    print(favouriteVm.favoriteBox.values);
     return Scaffold(
       backgroundColor: NovaColors.backgroundDark,
       appBar: AppBar(
