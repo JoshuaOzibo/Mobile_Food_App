@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:mobile_food_app/core/components/decrement_model_helper.dart';
+import 'package:mobile_food_app/core/components/increment_model_helper.dart';
 import 'package:mobile_food_app/features/cart/databaseType/db_product_class.dart';
 import 'package:mobile_food_app/models/product_class.dart';
 
@@ -8,6 +10,8 @@ class CartViewmodel extends ChangeNotifier {
   final double deliveryFee = 1.50;
   List<ProductClass> get getCartItems => _cart;
   final Box<DatabaseProductClass> hiveCartStorage = Hive.box('cart');
+  final incrementHelperFunc = IncrementModelHelper();
+  final decrementHelperFunc = DecrementModelHelper();
 
   void fetchDbCart() {
     for (var hiveCart in hiveCartStorage.values.toList()) {
@@ -50,14 +54,35 @@ class CartViewmodel extends ChangeNotifier {
 
   void incrementQuantity(ProductClass product) {
     // db
-    final currentDatabase = hiveCartStorage.values.toList();
-    final uiToDbModel = DatabaseProductClass.fromProduct(product);
+    final indexOfSingleItem = hiveCartStorage.values.toList().indexWhere(
+      (item) => item.id == product.id,
+    );
 
-   final getItemId = currentDatabase.indexWhere((item) => item.id == uiToDbModel.id);
-   var currentItem = currentDatabase[getItemId];
+    if (indexOfSingleItem != -1) {
+      // get the dbIndexOfThatItem
+      final getItem = hiveCartStorage.getAt(indexOfSingleItem);
+      incrementHelperFunc.updateModelHelper(
+        index: indexOfSingleItem,
+        getItem: getItem,
+      );
+      // // updated items
+      // final updatedItem = DatabaseProductClass(
+      //   id: getItem!.id,
+      //   area: getItem.area,
+      //   category: getItem.category,
+      //   ingredients: getItem.ingredients,
+      //   instructions: getItem.instructions,
+      //   measures: getItem.measures,
+      //   name: getItem.name,
+      //   price: getItem.price,
+      //   quantity: getItem.quantity + 1,
+      //   rating: getItem.rating,
+      //   thumbnail: getItem.thumbnail,
+      //   youtube: getItem.youtube,
+      // );
 
-  currentItem.quantity  = currentDatabase[getItemId].quantity + 1;
-
+      // hiveCartStorage.putAt(indexOfSingleItem, updatedItem);
+    }
 
     // ui
     final findIndex = _cart.indexWhere((item) => item.id == product.id);
@@ -68,21 +93,31 @@ class CartViewmodel extends ChangeNotifier {
 
   void decrementQuantity(ProductClass product) {
     // db
-    final hiveStorage = hiveCartStorage.values.toList();
-    for (var hiveSingleItem in hiveStorage) {
-      final findIndex = hiveSingleItem.toProduct().id == product.id;
-      if (hiveSingleItem.quantity == 1) {
-        findIndex ? hiveSingleItem.id != product.id : hiveSingleItem;
-        notifyListeners();
-      }
-    }
-    final findDbIndex = hiveStorage.indexWhere((item) => item.id == product.id);
-    final getSingleDbFoodQty = hiveStorage[findDbIndex].quantity;
-    if (getSingleDbFoodQty == 1) {
-      hiveStorage.removeAt(findDbIndex);
-    } else {
-      hiveStorage[findDbIndex].quantity - 1;
-    }
+    final itemIndex = hiveCartStorage.values.toList().indexWhere(
+      (item) => item.id == product.id,
+    );
+
+    final dbItem = hiveCartStorage.getAt(itemIndex);
+
+    incrementHelperFunc.updateModelHelper(index: itemIndex, getItem: dbItem);
+
+    // final updatedItem = DatabaseProductClass(
+    //   id: dbItem!.id,
+    //   area: dbItem.area,
+    //   category: dbItem.category,
+    //   ingredients: dbItem.ingredients,
+    //   instructions: dbItem.instructions,
+    //   measures: dbItem.measures,
+    //   name: dbItem.name,
+    //   price: dbItem.price,
+    //   quantity: dbItem.quantity - 1,
+    //   rating: dbItem.rating,
+    //   thumbnail: dbItem.thumbnail,
+    //   youtube: dbItem.youtube,
+    // );
+
+    // hiveCartStorage.putAt(itemIndex, updatedItem);
+
     // ui
     final findIndex = _cart.indexWhere((item) => item.id == product.id);
     final getSingleFoodQty = _cart[findIndex].quantity;
